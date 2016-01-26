@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Codaxy.WkHtmlToPdf;
 using MetroFramework.Forms;
+using System.IO;
+using System.Reflection;
 
 namespace cnblogbackup
 {
