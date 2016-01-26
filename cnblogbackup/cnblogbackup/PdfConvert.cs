@@ -168,7 +168,7 @@ namespace Codaxy.WkHtmlToPdf
             //    return filePath;
 
             //return Path.Combine(programFilesx86Path, @"wkhtmltopdf\bin\wkhtmltopdf.exe");
-            return "wkhtmltopdf.exe";
+            return "../../lib/wkhtmltopdf.exe";
         }
 
         private static bool IsEmptyUrl(string url)
