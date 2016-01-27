@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=11.5.0.0, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
     <Reference Include="MetroFramework">
       <HintPath>lib\MetroFramework.dll</HintPath>
     </Reference>
@@ -64,6 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigureForm.Designer.cs">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BlogsParser.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -74,6 +81,9 @@
     <Compile Include="PdfConvert.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConfigureForm.resx">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -87,6 +97,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Properties\DataSources\BlogsParser.datasource" />
+    <None Include="Properties\DataSources\ConfigureForm.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

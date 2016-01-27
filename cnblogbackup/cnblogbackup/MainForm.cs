@@ -35,5 +35,11 @@ namespace cnblogbackup
                 OutputFilePath = "test.pdf"
             });
         }
+
+        private void ConfigureButton_Click(object sender, EventArgs e)
+        {
+            ConfigureForm config = new ConfigureForm();
+            config.ShowDialog();
+        }
     }
 }
