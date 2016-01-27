@@ -31,12 +31,15 @@
             this.PathTextBox = new MetroFramework.Controls.MetroTextBox();
             this.PathConfButton = new MetroFramework.Controls.MetroButton();
             this.PathBroswerDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.LinkFlow = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.AddedButton = new MetroFramework.Controls.MetroButton();
-            this.HyperToggleButton = new MetroFramework.Controls.MetroToggle();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-            this.LinkFlow.SuspendLayout();
+            this.ChangeButton = new MetroFramework.Controls.MetroButton();
+            this.BlogTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.NamePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ToolTip = new MetroFramework.Components.MetroToolTip();
+            this.RemoveButton = new MetroFramework.Controls.MetroButton();
+            this.NumberTextBox = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.AddButton = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // PathTextBox
@@ -50,7 +53,7 @@
             this.PathTextBox.Multiline = false;
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.SelectedText = "";
-            this.PathTextBox.Size = new System.Drawing.Size(365, 35);
+            this.PathTextBox.Size = new System.Drawing.Size(332, 35);
             this.PathTextBox.Style = MetroFramework.MetroColorStyle.Blue;
             this.PathTextBox.StyleManager = null;
             this.PathTextBox.TabIndex = 0;
@@ -61,9 +64,9 @@
             // 
             this.PathConfButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PathConfButton.Highlight = true;
-            this.PathConfButton.Location = new System.Drawing.Point(529, 76);
+            this.PathConfButton.Location = new System.Drawing.Point(450, 76);
             this.PathConfButton.Name = "PathConfButton";
-            this.PathConfButton.Size = new System.Drawing.Size(115, 35);
+            this.PathConfButton.Size = new System.Drawing.Size(134, 35);
             this.PathConfButton.Style = MetroFramework.MetroColorStyle.Red;
             this.PathConfButton.StyleManager = null;
             this.PathConfButton.TabIndex = 1;
@@ -71,88 +74,145 @@
             this.PathConfButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.PathConfButton.Click += new System.EventHandler(this.PathConfButton_Click);
             // 
-            // LinkFlow
+            // ChangeButton
             // 
-            this.LinkFlow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LinkFlow.AutoScroll = true;
-            this.LinkFlow.AutoSize = true;
-            this.LinkFlow.Controls.Add(this.flowLayoutPanel1);
-            this.LinkFlow.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.LinkFlow.Location = new System.Drawing.Point(64, 145);
-            this.LinkFlow.MaximumSize = new System.Drawing.Size(365, 200);
-            this.LinkFlow.Name = "LinkFlow";
-            this.LinkFlow.Size = new System.Drawing.Size(365, 200);
-            this.LinkFlow.TabIndex = 3;
-            this.LinkFlow.WrapContents = false;
+            this.ChangeButton.Highlight = true;
+            this.ChangeButton.Location = new System.Drawing.Point(305, 265);
+            this.ChangeButton.Name = "ChangeButton";
+            this.ChangeButton.Size = new System.Drawing.Size(115, 37);
+            this.ChangeButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ChangeButton.StyleManager = null;
+            this.ChangeButton.TabIndex = 4;
+            this.ChangeButton.Text = "保存";
+            this.ChangeButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
-            // flowLayoutPanel1
+            // BlogTextBox
             // 
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(0, 0);
-            this.flowLayoutPanel1.TabIndex = 2;
+            this.BlogTextBox.CustomBackground = false;
+            this.BlogTextBox.CustomForeColor = false;
+            this.BlogTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
+            this.BlogTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Bold;
+            this.BlogTextBox.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.BlogTextBox.Location = new System.Drawing.Point(321, 203);
+            this.BlogTextBox.Multiline = false;
+            this.BlogTextBox.Name = "BlogTextBox";
+            this.BlogTextBox.SelectedText = "";
+            this.BlogTextBox.Size = new System.Drawing.Size(263, 30);
+            this.BlogTextBox.Style = MetroFramework.MetroColorStyle.White;
+            this.BlogTextBox.StyleManager = null;
+            this.BlogTextBox.TabIndex = 6;
+            this.BlogTextBox.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.BlogTextBox.UseStyleColors = true;
+            this.BlogTextBox.DoubleClick += new System.EventHandler(this.BlogTextBox_DoubleClick);
             // 
-            // AddedButton
+            // NamePanel
             // 
-            this.AddedButton.Highlight = true;
-            this.AddedButton.Location = new System.Drawing.Point(529, 239);
-            this.AddedButton.Name = "AddedButton";
-            this.AddedButton.Size = new System.Drawing.Size(115, 37);
-            this.AddedButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.AddedButton.StyleManager = null;
-            this.AddedButton.TabIndex = 4;
-            this.AddedButton.Text = "增加映射对";
-            this.AddedButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.NamePanel.AutoScroll = true;
+            this.NamePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.NamePanel.Location = new System.Drawing.Point(64, 145);
+            this.NamePanel.Name = "NamePanel";
+            this.NamePanel.Size = new System.Drawing.Size(167, 185);
+            this.NamePanel.TabIndex = 7;
             // 
-            // HyperToggleButton
+            // ToolTip
             // 
-            this.HyperToggleButton.AutoSize = true;
-            this.HyperToggleButton.CustomBackground = false;
-            this.HyperToggleButton.DisplayStatus = true;
-            this.HyperToggleButton.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.HyperToggleButton.FontWeight = MetroFramework.MetroLinkWeight.Regular;
-            this.HyperToggleButton.Location = new System.Drawing.Point(183, 374);
-            this.HyperToggleButton.Name = "HyperToggleButton";
-            this.HyperToggleButton.Size = new System.Drawing.Size(80, 16);
-            this.HyperToggleButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.HyperToggleButton.StyleManager = null;
-            this.HyperToggleButton.TabIndex = 5;
-            this.HyperToggleButton.Text = "Off";
-            this.HyperToggleButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.HyperToggleButton.UseStyleColors = false;
-            this.HyperToggleButton.UseVisualStyleBackColor = true;
+            this.ToolTip.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ToolTip.StyleManager = null;
+            this.ToolTip.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
-            // metroTextBox1
+            // RemoveButton
             // 
-            this.metroTextBox1.CustomBackground = false;
-            this.metroTextBox1.CustomForeColor = false;
-            this.metroTextBox1.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.metroTextBox1.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.metroTextBox1.Location = new System.Drawing.Point(474, 201);
-            this.metroTextBox1.Multiline = false;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.Size = new System.Drawing.Size(240, 23);
-            this.metroTextBox1.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.StyleManager = null;
-            this.metroTextBox1.TabIndex = 6;
-            this.metroTextBox1.Text = "metroTextBox1";
-            this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.UseStyleColors = false;
+            this.RemoveButton.Highlight = true;
+            this.RemoveButton.Location = new System.Drawing.Point(459, 265);
+            this.RemoveButton.Name = "RemoveButton";
+            this.RemoveButton.Size = new System.Drawing.Size(115, 37);
+            this.RemoveButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.RemoveButton.StyleManager = null;
+            this.RemoveButton.TabIndex = 8;
+            this.RemoveButton.Text = "删除";
+            this.RemoveButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
+            // 
+            // NumberTextBox
+            // 
+            this.NumberTextBox.CustomBackground = false;
+            this.NumberTextBox.CustomForeColor = false;
+            this.NumberTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
+            this.NumberTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Bold;
+            this.NumberTextBox.Location = new System.Drawing.Point(321, 161);
+            this.NumberTextBox.Multiline = false;
+            this.NumberTextBox.Name = "NumberTextBox";
+            this.NumberTextBox.SelectedText = "";
+            this.NumberTextBox.Size = new System.Drawing.Size(263, 30);
+            this.NumberTextBox.Style = MetroFramework.MetroColorStyle.White;
+            this.NumberTextBox.StyleManager = null;
+            this.NumberTextBox.TabIndex = 9;
+            this.NumberTextBox.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.NumberTextBox.UseStyleColors = true;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.CustomBackground = false;
+            this.metroLabel1.CustomForeColor = false;
+            this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Medium;
+            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Light;
+            this.metroLabel1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.metroLabel1.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
+            this.metroLabel1.Location = new System.Drawing.Point(269, 167);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(37, 19);
+            this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroLabel1.StyleManager = null;
+            this.metroLabel1.TabIndex = 10;
+            this.metroLabel1.Text = "学号";
+            this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroLabel1.UseStyleColors = false;
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.CustomBackground = false;
+            this.metroLabel2.CustomForeColor = false;
+            this.metroLabel2.FontSize = MetroFramework.MetroLabelSize.Medium;
+            this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Light;
+            this.metroLabel2.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
+            this.metroLabel2.Location = new System.Drawing.Point(250, 214);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(65, 19);
+            this.metroLabel2.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroLabel2.StyleManager = null;
+            this.metroLabel2.TabIndex = 11;
+            this.metroLabel2.Text = "博客主页";
+            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroLabel2.UseStyleColors = false;
+            // 
+            // AddButton
+            // 
+            this.AddButton.Highlight = true;
+            this.AddButton.Location = new System.Drawing.Point(379, 327);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(115, 37);
+            this.AddButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.AddButton.StyleManager = null;
+            this.AddButton.TabIndex = 12;
+            this.AddButton.Text = "添加";
+            this.AddButton.Theme = MetroFramework.MetroThemeStyle.Light;
             // 
             // ConfigureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(737, 422);
-            this.Controls.Add(this.metroTextBox1);
-            this.Controls.Add(this.HyperToggleButton);
-            this.Controls.Add(this.AddedButton);
-            this.Controls.Add(this.LinkFlow);
+            this.ClientSize = new System.Drawing.Size(656, 422);
+            this.Controls.Add(this.AddButton);
+            this.Controls.Add(this.metroLabel2);
+            this.Controls.Add(this.metroLabel1);
+            this.Controls.Add(this.NumberTextBox);
+            this.Controls.Add(this.RemoveButton);
+            this.Controls.Add(this.NamePanel);
+            this.Controls.Add(this.BlogTextBox);
+            this.Controls.Add(this.ChangeButton);
             this.Controls.Add(this.PathConfButton);
             this.Controls.Add(this.PathTextBox);
             this.DisplayHeader = false;
@@ -161,8 +221,6 @@
             this.Padding = new System.Windows.Forms.Padding(20, 30, 20, 20);
             this.Resizable = false;
             this.Text = "ConfigureForm";
-            this.LinkFlow.ResumeLayout(false);
-            this.LinkFlow.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,10 +231,14 @@
         private MetroFramework.Controls.MetroTextBox PathTextBox;
         private MetroFramework.Controls.MetroButton PathConfButton;
         private System.Windows.Forms.FolderBrowserDialog PathBroswerDialog;
-        private System.Windows.Forms.FlowLayoutPanel LinkFlow;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private MetroFramework.Controls.MetroButton AddedButton;
-        private MetroFramework.Controls.MetroToggle HyperToggleButton;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private MetroFramework.Controls.MetroButton ChangeButton;
+        private MetroFramework.Controls.MetroTextBox BlogTextBox;
+        private System.Windows.Forms.FlowLayoutPanel NamePanel;
+        private MetroFramework.Components.MetroToolTip ToolTip;
+        private MetroFramework.Controls.MetroButton RemoveButton;
+        private MetroFramework.Controls.MetroTextBox NumberTextBox;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroButton AddButton;
     }
 }

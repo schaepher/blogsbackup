@@ -1,43 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <students>
-	<cnblogs number="13061193" home="http://www.cnblogs.com/SivilTaram/">
-		<link title="我的第一篇文章">
+  <cnblogs number="13061193" home="http://www.cnblogs.com/SivilTaram/233">
+    <link title="我的第一篇文章">
 			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
 		</link>
-		<link title="我的第二篇文章">
+    <link title="我的第二篇文章">
 			http://www.cnblogs.com/SivilTaram/p/5120044.html
 		</link>
-	</cnblogs>
-	<cnblogs number="1306119299" home="http://www.cnblogs.com/SivilTarm/">
-		<link title="我的第一篇文章">
+  </cnblogs>
+  <cnblogs number="130611928811" home="http://www.cnblogs.com/SivilTarm/21">
+    <link title="我的第一篇文章">
 			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
 		</link>
-		<link title="我的第二篇文章">
+    <link title="我的第二篇文章">
 			http://www.cnblogs.com/SivilTaram/p/5120044.html
 		</link>
-	</cnblogs>
-	<cnblogs number="1306119288" home="http://www.cnblogs.com/SivilTarm/222222222222222222222222222222222222222222222222222222222">
-		<link title="我的第一篇文章">
+  </cnblogs>
+  <cnblogs number="1306119277" home="http://www.cnblogs.com/SivilTarm/">
+    <link title="我的第一篇文章">
 			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
 		</link>
-		<link title="我的第二篇文章">
+    <link title="我的第二篇文章">
 			http://www.cnblogs.com/SivilTaram/p/5120044.html
 		</link>
-	</cnblogs>
-	<cnblogs number="1306119277" home="http://www.cnblogs.com/SivilTarm/">
-		<link title="我的第一篇文章">
-			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
-		</link>
-		<link title="我的第二篇文章">
-			http://www.cnblogs.com/SivilTaram/p/5120044.html
-		</link>
-	</cnblogs>
-	<cnblogs number="13061192779" home="http://www.cnblogs.com/SivilTarm/">
-		<link title="我的第一篇文章">
-			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
-		</link>
-		<link title="我的第二篇文章">
-			http://www.cnblogs.com/SivilTaram/p/5120044.html
-		</link>
-	</cnblogs>
+  </cnblogs>
 </students>

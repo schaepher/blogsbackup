@@ -12,12 +12,14 @@ using System.IO;
 using System.Xml;
 using System.Reflection;
 using MetroFramework.Controls;
+using DevComponents.DotNetBar;
 
 namespace cnblogbackup
 {
     public partial class ConfigureForm : MetroForm
     {
         private Dictionary<string, string> blogs_dict;
+        private MetroLink last_click = null;
         public ConfigureForm()
         {
             InitializeComponent();
@@ -80,27 +82,110 @@ namespace cnblogbackup
 
         private void FillDisplayFlow()
         {
-            foreach(string key in blogs_dict.Keys)
+            int y = 0;
+            foreach (string key in blogs_dict.Keys)
             {
-                MetroLabel name_label = new MetroLabel();
-                MetroLink link_label = new MetroLink();
-                name_label.Text = key;
-                link_label.Text = blogs_dict[key];
-                link_label.AutoSize = true;
-                name_label.AutoSize = true;
-                name_label.TextAlign = ContentAlignment.MiddleCenter;
-                link_label.TextAlign = ContentAlignment.MiddleCenter;
-                link_label.UseStyleColors = true;
-                link_label.Click += Link_label_Click;
-                LinkFlow.Controls.Add(name_label);
-                LinkFlow.Controls.Add(link_label);
+                MetroLink name_label = GetLink(key);
+                NamePanel.Controls.Add(name_label);
+                ToolTip.SetToolTip(name_label, blogs_dict[key]);
             }
+        }
+
+        private MetroLink GetLink(string text)
+        {
+            MetroLink name_label = new MetroLink();
+            name_label.Text = text;
+            name_label.Width = 100;
+            name_label.TextAlign = ContentAlignment.MiddleLeft;
+            name_label.UseStyleColors = true;
+            name_label.Click += Link_label_Click;
+            return name_label;
         }
 
         private void Link_label_Click(object sender, EventArgs e)
         {
             MetroLink temp = (MetroLink)sender;
+            NumberTextBox.Text = temp.Text;
+            BlogTextBox.Text = blogs_dict[temp.Text];
+            last_click = temp;
+            //System.Diagnostics.Process.Start(blogs_dict[temp.Text]);
+        }
+
+
+        private void ChangeButton_Click(object sender, EventArgs e)
+        {
+            if (last_click == null)
+            {
+                MessageBox.Show("未选中任何学生！");
+                return;
+            }
+            XmlDocument xml_doc = new XmlDocument();
+            try
+            {
+                xml_doc.Load("../../lib/Configure.xml");
+                //if load success
+                XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+                foreach (XmlNode single_blog in root_node.ChildNodes)
+                {
+                    //<cnblogs number="123456" home="http://cnblogs.com/SivilTaram">
+                    string blog_owner = single_blog.Attributes["number"].Value;
+                    if(blog_owner == last_click.Text)
+                    {
+                        ((XmlElement)single_blog).SetAttribute("number",NumberTextBox.Text);
+                        ((XmlElement)single_blog).SetAttribute("home",BlogTextBox.Text);
+                        blogs_dict.Remove(last_click.Text);
+                        blogs_dict.Add(NumberTextBox.Text, BlogTextBox.Text);
+                    }
+                }
+                xml_doc.Save("../../lib/Configure.xml");
+                last_click.Text = NumberTextBox.Text;
+                ToolTip.SetToolTip(last_click, BlogTextBox.Text);
+            }
+            catch(System.Xml.XmlException)
+            {
+
+            }
+         }
+
+        private void BlogTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            MetroTextBox temp = (MetroTextBox)sender;
             System.Diagnostics.Process.Start(temp.Text);
+        }
+
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            if (last_click == null)
+            {
+                MessageBox.Show("未选中任何一名学生！");
+                return;
+            }
+            XmlDocument xml_doc = new XmlDocument();
+            try
+            {
+                xml_doc.Load("../../lib/Configure.xml");
+                //if load success
+                XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+                foreach (XmlNode single_blog in root_node.ChildNodes)
+                {
+                    //<cnblogs number="123456" home="http://cnblogs.com/SivilTaram">
+                    string blog_owner = single_blog.Attributes["number"].Value;
+                    if (blog_owner == last_click.Text)
+                    {
+                        root_node.RemoveChild(single_blog);
+                        blogs_dict.Remove(last_click.Text);
+                        break;
+                    }
+                }
+                xml_doc.Save("../../lib/Configure.xml");
+                NamePanel.Controls.Remove(last_click);
+                NumberTextBox.Text = "";
+                BlogTextBox.Text = "";
+            }
+            catch (System.Xml.XmlException)
+            {
+
+            }
         }
     }
     class post
@@ -108,4 +193,5 @@ namespace cnblogbackup
         public string title { get; set; }
         public string link { get; set; }
     }
+
 }
