@@ -19,7 +19,7 @@ namespace cnblogbackup
     {
         private Dictionary<string, string> blogs_dict;
         private MetroLink last_click = null;
-        public delegate void UpdatePanel(List<Numhome> list);
+        public delegate void UpdatePanel(List<blog> list);
         public UpdatePanel my_delegate;
         public ConfigureForm()
         {
@@ -30,20 +30,36 @@ namespace cnblogbackup
             my_delegate = new UpdatePanel(UpdataPanelMethod);
         }
 
-        public void UpdataPanelMethod(List<Numhome> _list)
+        public void UpdataPanelMethod(List<blog> _list)
         {
             XmlDocument xml_doc = new XmlDocument();
             xml_doc.Load("../../lib/Configure.xml");
             XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
-            foreach (Numhome temp in _list)
+            Dictionary<string, string> temp_queue = new Dictionary<string, string>();
+            bool is_repeated = false;
+            foreach (blog temp in _list)
             {
-                blogs_dict.Add(temp.number, temp.home);
-                NamePanel.Controls.Add(GetLink(temp.number));
-
-                XmlElement blog_home = xml_doc.CreateElement("cnblogs");
-                blog_home.SetAttribute("number", temp.number);
-                blog_home.SetAttribute("home", temp.home);
-                root_node.AppendChild(blog_home);
+                if (!blogs_dict.ContainsKey(temp.number))
+                {
+                    blogs_dict.Add(temp.number, temp.homepage);
+                    NamePanel.Controls.Add(GetLink(temp.number));
+                    XmlElement blog_home = xml_doc.CreateElement("cnblogs");
+                    blog_home.SetAttribute("number", temp.number);
+                    blog_home.SetAttribute("home", temp.homepage);
+                    root_node.AppendChild(blog_home);
+                }
+                else
+                {
+                    temp_queue.Add(temp.number, temp.homepage);
+                    is_repeated = true;
+                }
+            }
+            if (is_repeated && MessageBox.Show("检测到有重复学号录入，是否要覆盖？", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                foreach (string new_key in temp_queue.Keys)
+                {
+                    blogs_dict[new_key] = temp_queue[new_key];
+                }
             }
             xml_doc.Save("../../lib/Configure.xml");
         }
@@ -78,6 +94,11 @@ namespace cnblogbackup
                 xml_doc.Load("../../lib/Configure.xml");
                 //if load success
                 XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+                string path;
+                if((path = ((XmlElement)root_node).GetAttribute("path"))!= null)
+                {
+                    PathTextBox.Text = path;
+                }
                 foreach (XmlNode single_blog in root_node.ChildNodes)
                 {
                     //<cnblogs number="123456" home="http://cnblogs.com/SivilTaram">
@@ -126,6 +147,7 @@ namespace cnblogbackup
             name_label.TextAlign = ContentAlignment.MiddleLeft;
             name_label.UseStyleColors = true;
             name_label.Click += Link_label_Click;
+            name_label.FontSize = MetroFramework.MetroLinkSize.Medium;
             return name_label;
         }
 
@@ -225,11 +247,41 @@ namespace cnblogbackup
             AddForm add_form = new AddForm(this);
             add_form.ShowDialog();
         }
+
+        private void SaveConfButton_Click(object sender, EventArgs e)
+        {
+            string path = PathTextBox.Text;
+            if (!Directory.Exists(path))
+            {
+                MessageBox.Show("请输入正确的存储路径！");
+            }
+            else
+            {
+                XmlDocument xml_doc = new XmlDocument();
+                xml_doc.Load("../../lib/Configure.xml");
+                XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+                ((XmlElement)root_node).SetAttribute("path", path);
+                xml_doc.Save("../../lib/Configure.xml");
+                this.Close();
+            }
+        }
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            blogs_dict.Clear();
+            NamePanel.Controls.Clear();
+            XmlDocument xml_doc = new XmlDocument();
+            xml_doc.Load("../../lib/Configure.xml");
+            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+            root_node.RemoveAll();
+            xml_doc.Save("../../lib/Configure.xml");
+            NumberTextBox.Text = "";
+            BlogTextBox.Text = "";
+        }
     }
-    class Numhome
+    class blog
     {
         public string number { get; set; }
-        public string home { get; set; }
+        public string homepage { get; set; }
     }
 
 }

@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 
 namespace cnblogbackup
 {
-    public class Options
+    public enum Options
     {
-        public const int FromBlogContent = 0;
-        public const int FromBlogComment = 1;
+        FromBlogContent,
+        FromBlogComment
     }
 
     public class BlogsParser
@@ -41,7 +41,7 @@ namespace cnblogbackup
             return dic;
         }
 
-        public static Dictionary<string, string> NumberHomepageDic(string url, int option)
+        public static Dictionary<string, string> NumberHomepageDic(string url, Options option)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             string html = GetHtml(url);

@@ -39,14 +39,63 @@ namespace cnblogbackup
                 return;
             }
             string[] allLines = File.ReadAllLines(csv_path);
-            List<Numhome> result = new List<Numhome>();
+            List<blog> result = new List<blog>();
             foreach (string line in allLines)
             {
                 string[] data = line.Split(',');
-                result.Add(new Numhome
+                result.Add(new blog
                 {
                     number = data[0],
-                    home = data[1]
+                    homepage = data[1]
+                });
+            }
+            main_form_control.Invoke(main_form_control.my_delegate,result);
+        }
+
+        private void AddedButton_Click(object sender, EventArgs e)
+        {
+            string Prefix = "";
+            // number and blogname
+            string Number = NumberTextBox.Text;
+            string Blog = UserTextBox.Text;
+            if (CnblogRadio.Checked == true)
+            {
+                Prefix = "http://www.cnblogs.com/" + Blog;
+            }
+            else if (GithubRadio.Checked == true)
+            {
+                Prefix = "http://" + Blog + ".github.io/";
+            }
+            else if(CsdnRadio.Checked == true)
+            {
+                Prefix = "http://blog.csdn.net/" + Blog;
+            }
+            else if(CustomRadio.Checked == true)
+            {
+                Prefix = Blog;
+            }
+            main_form_control.Invoke(main_form_control.my_delegate, new object[] {
+            new List<blog>(){
+                new blog {
+                    number = Number,
+                    homepage = Prefix
+                    }
+            } });
+            NumberTextBox.Text = "";
+            UserTextBox.Text = "";
+        }
+
+        private void HttpImportButton_Click(object sender, EventArgs e)
+        {
+            string post_url = PathTextBox.Text;
+            Dictionary<string,string> num_home = BlogsParser.NumberHomepageDic(post_url, Options.FromBlogContent);
+            List<blog> result = new List<blog>(num_home.Count);
+            foreach (string key in num_home.Keys)
+            {
+                result.Add(new blog
+                {
+                    number = key,
+                    homepage = num_home[key]
                 });
             }
             main_form_control.Invoke(main_form_control.my_delegate,result);

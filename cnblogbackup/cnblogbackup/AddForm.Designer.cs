@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.metroRadioButton4 = new MetroFramework.Controls.MetroRadioButton();
-            this.metroRadioButton3 = new MetroFramework.Controls.MetroRadioButton();
+            this.CustomRadio = new MetroFramework.Controls.MetroRadioButton();
+            this.GithubRadio = new MetroFramework.Controls.MetroRadioButton();
             this.CsdnRadio = new MetroFramework.Controls.MetroRadioButton();
             this.CnblogRadio = new MetroFramework.Controls.MetroRadioButton();
             this.NumberTextBox = new MetroFramework.Controls.MetroTextBox();
@@ -48,8 +48,8 @@
             // 
             // metroPanel1
             // 
-            this.metroPanel1.Controls.Add(this.metroRadioButton4);
-            this.metroPanel1.Controls.Add(this.metroRadioButton3);
+            this.metroPanel1.Controls.Add(this.CustomRadio);
+            this.metroPanel1.Controls.Add(this.GithubRadio);
             this.metroPanel1.Controls.Add(this.CsdnRadio);
             this.metroPanel1.Controls.Add(this.CnblogRadio);
             this.metroPanel1.CustomBackground = false;
@@ -69,43 +69,43 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // metroRadioButton4
+            // CustomRadio
             // 
-            this.metroRadioButton4.AutoSize = true;
-            this.metroRadioButton4.CustomBackground = false;
-            this.metroRadioButton4.CustomForeColor = false;
-            this.metroRadioButton4.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroRadioButton4.FontWeight = MetroFramework.MetroLinkWeight.Regular;
-            this.metroRadioButton4.Location = new System.Drawing.Point(27, 123);
-            this.metroRadioButton4.Name = "metroRadioButton4";
-            this.metroRadioButton4.Size = new System.Drawing.Size(88, 15);
-            this.metroRadioButton4.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroRadioButton4.StyleManager = null;
-            this.metroRadioButton4.TabIndex = 5;
-            this.metroRadioButton4.TabStop = true;
-            this.metroRadioButton4.Text = "自定义域名";
-            this.metroRadioButton4.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroRadioButton4.UseStyleColors = false;
-            this.metroRadioButton4.UseVisualStyleBackColor = true;
+            this.CustomRadio.AutoSize = true;
+            this.CustomRadio.CustomBackground = false;
+            this.CustomRadio.CustomForeColor = false;
+            this.CustomRadio.FontSize = MetroFramework.MetroLinkSize.Small;
+            this.CustomRadio.FontWeight = MetroFramework.MetroLinkWeight.Regular;
+            this.CustomRadio.Location = new System.Drawing.Point(27, 123);
+            this.CustomRadio.Name = "CustomRadio";
+            this.CustomRadio.Size = new System.Drawing.Size(88, 15);
+            this.CustomRadio.Style = MetroFramework.MetroColorStyle.Blue;
+            this.CustomRadio.StyleManager = null;
+            this.CustomRadio.TabIndex = 5;
+            this.CustomRadio.TabStop = true;
+            this.CustomRadio.Text = "自定义域名";
+            this.CustomRadio.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.CustomRadio.UseStyleColors = false;
+            this.CustomRadio.UseVisualStyleBackColor = true;
             // 
-            // metroRadioButton3
+            // GithubRadio
             // 
-            this.metroRadioButton3.AutoSize = true;
-            this.metroRadioButton3.CustomBackground = false;
-            this.metroRadioButton3.CustomForeColor = false;
-            this.metroRadioButton3.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroRadioButton3.FontWeight = MetroFramework.MetroLinkWeight.Regular;
-            this.metroRadioButton3.Location = new System.Drawing.Point(27, 53);
-            this.metroRadioButton3.Name = "metroRadioButton3";
-            this.metroRadioButton3.Size = new System.Drawing.Size(85, 15);
-            this.metroRadioButton3.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroRadioButton3.StyleManager = null;
-            this.metroRadioButton3.TabIndex = 4;
-            this.metroRadioButton3.TabStop = true;
-            this.metroRadioButton3.Text = "Github博客";
-            this.metroRadioButton3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroRadioButton3.UseStyleColors = false;
-            this.metroRadioButton3.UseVisualStyleBackColor = true;
+            this.GithubRadio.AutoSize = true;
+            this.GithubRadio.CustomBackground = false;
+            this.GithubRadio.CustomForeColor = false;
+            this.GithubRadio.FontSize = MetroFramework.MetroLinkSize.Small;
+            this.GithubRadio.FontWeight = MetroFramework.MetroLinkWeight.Regular;
+            this.GithubRadio.Location = new System.Drawing.Point(27, 53);
+            this.GithubRadio.Name = "GithubRadio";
+            this.GithubRadio.Size = new System.Drawing.Size(85, 15);
+            this.GithubRadio.Style = MetroFramework.MetroColorStyle.Blue;
+            this.GithubRadio.StyleManager = null;
+            this.GithubRadio.TabIndex = 4;
+            this.GithubRadio.TabStop = true;
+            this.GithubRadio.Text = "Github博客";
+            this.GithubRadio.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.GithubRadio.UseStyleColors = false;
+            this.GithubRadio.UseVisualStyleBackColor = true;
             // 
             // CsdnRadio
             // 
@@ -149,9 +149,9 @@
             // 
             this.NumberTextBox.CustomBackground = false;
             this.NumberTextBox.CustomForeColor = false;
-            this.NumberTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
+            this.NumberTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.NumberTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.NumberTextBox.Location = new System.Drawing.Point(273, 46);
+            this.NumberTextBox.Location = new System.Drawing.Point(273, 52);
             this.NumberTextBox.Multiline = false;
             this.NumberTextBox.Name = "NumberTextBox";
             this.NumberTextBox.SelectedText = "";
@@ -166,10 +166,10 @@
             // 
             this.UserTextBox.CustomBackground = false;
             this.UserTextBox.CustomForeColor = false;
-            this.UserTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
+            this.UserTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.UserTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.UserTextBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.UserTextBox.Location = new System.Drawing.Point(273, 99);
+            this.UserTextBox.Location = new System.Drawing.Point(273, 94);
             this.UserTextBox.Multiline = false;
             this.UserTextBox.Name = "UserTextBox";
             this.UserTextBox.SelectedText = "";
@@ -182,15 +182,16 @@
             // 
             // AddedButton
             // 
-            this.AddedButton.Highlight = false;
-            this.AddedButton.Location = new System.Drawing.Point(298, 154);
+            this.AddedButton.Highlight = true;
+            this.AddedButton.Location = new System.Drawing.Point(324, 154);
             this.AddedButton.Name = "AddedButton";
             this.AddedButton.Size = new System.Drawing.Size(112, 34);
-            this.AddedButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.AddedButton.Style = MetroFramework.MetroColorStyle.Silver;
             this.AddedButton.StyleManager = null;
             this.AddedButton.TabIndex = 3;
             this.AddedButton.Text = "添加";
             this.AddedButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.AddedButton.Click += new System.EventHandler(this.AddedButton_Click);
             // 
             // CsvImportButton
             // 
@@ -216,6 +217,7 @@
             this.HttpImportButton.TabIndex = 5;
             this.HttpImportButton.Text = "网址导入";
             this.HttpImportButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.HttpImportButton.Click += new System.EventHandler(this.HttpImportButton_Click);
             // 
             // metroLabel1
             // 
@@ -226,7 +228,7 @@
             this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel1.ForeColor = System.Drawing.Color.Coral;
             this.metroLabel1.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel1.Location = new System.Drawing.Point(225, 51);
+            this.metroLabel1.Location = new System.Drawing.Point(225, 54);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(37, 19);
             this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
@@ -245,7 +247,7 @@
             this.用户名.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.用户名.ForeColor = System.Drawing.Color.Black;
             this.用户名.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.用户名.Location = new System.Drawing.Point(213, 108);
+            this.用户名.Location = new System.Drawing.Point(213, 103);
             this.用户名.Name = "用户名";
             this.用户名.Size = new System.Drawing.Size(51, 19);
             this.用户名.Style = MetroFramework.MetroColorStyle.Blue;
@@ -324,8 +326,8 @@
         #endregion
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroRadioButton metroRadioButton4;
-        private MetroFramework.Controls.MetroRadioButton metroRadioButton3;
+        private MetroFramework.Controls.MetroRadioButton CustomRadio;
+        private MetroFramework.Controls.MetroRadioButton GithubRadio;
         private MetroFramework.Controls.MetroRadioButton CsdnRadio;
         private MetroFramework.Controls.MetroRadioButton CnblogRadio;
         private MetroFramework.Controls.MetroTextBox NumberTextBox;
