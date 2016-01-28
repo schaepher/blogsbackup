@@ -6,11 +6,17 @@ using System.Text.RegularExpressions;
 
 namespace cnblogbackup
 {
+    public class Options
+    {
+        public const int FromBlogContent = 0;
+        public const int FromBlogComment = 1;
+    }
+
     public class BlogsParser
     {
         private static WebClient client = null;
 
-        public static Dictionary<string, string> GetDictionary(string baseUrl)
+        public static Dictionary<string, string> UrlTitleDic(string baseUrl)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
 
@@ -22,20 +28,55 @@ namespace cnblogbackup
                 string html = GetHtml(url);
 
                 Dictionary<string, string> temp = new Dictionary<string, string>();
-                temp = GetTitleAndUrl(html);
+                string pattern = "HomePageDays_DaysList_ctl\\d+_DayList_TitleUrl_0\" class=\"postTitle2\" href=\"(.+?)\">(.+?)</a>";
+                temp = GetDictionary(html, pattern);
                 dic = dic.Concat(temp).ToDictionary(k => k.Key, v => v.Value);
 
                 string nextPageTail = GetNextPage(html);
-
                 if (nextPageTail != "")
-                {
                     url = baseUrl + nextPageTail;
-                }
                 else
-                {
                     break;
-                }
             }
+            return dic;
+        }
+
+        public static Dictionary<string, string> NumberHomepageDic(string url, int option)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            string html = GetHtml(url);
+            string pattern;
+            switch (option)
+            {
+                case Options.FromBlogContent:
+                    pattern = "(\\d+)\\s*<a href=\"(.+?)\"";
+                    dic = GetDictionary(html, pattern);
+                    break;
+                case Options.FromBlogComment:
+                    break;
+                default:
+                    break;
+            }
+
+            Dictionary<string, string> dicSorted = dic.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
+
+            return dicSorted;
+        }
+
+        private static Dictionary<string, string> GetDictionary(string htmlContent, string pattern)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            Regex rgx = new Regex(pattern, RegexOptions.Singleline);
+            MatchCollection matchesResults = rgx.Matches(htmlContent);
+
+            foreach (Match match in matchesResults)
+            {
+                GroupCollection groups = match.Groups;
+                if (!dic.ContainsKey(groups[1].Value))
+                    dic.Add(groups[1].Value, groups[2].Value);
+            }
+
             return dic;
         }
 
@@ -55,23 +96,6 @@ namespace cnblogbackup
             return content;
         }
 
-        private static Dictionary<string, string> GetTitleAndUrl(string htmlContent)
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            string pattern = "HomePageDays_DaysList_ctl\\d+_DayList_TitleUrl_0\" class=\"postTitle2\" href=\"(.+?)\">(.+?)</a>";
-            Regex rgx = new Regex(pattern, RegexOptions.Singleline);
-            MatchCollection matchesResults = rgx.Matches(htmlContent);
-
-            foreach (Match match in matchesResults)
-            {
-                GroupCollection groups = match.Groups;
-                dic.Add(groups[1].Value, groups[2].Value);
-            }
-
-            return dic;
-        }
-
         private static string GetNextPage(string html)
         {
             string pattern = "default.html(\\?page=\\d+)\">下一页</a>";
@@ -81,6 +105,7 @@ namespace cnblogbackup
             string nextPageTail = group[1].Value;
             return nextPageTail;
         }
+
 
     }
 
