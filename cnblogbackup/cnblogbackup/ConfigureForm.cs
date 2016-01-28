@@ -12,21 +12,40 @@ using System.IO;
 using System.Xml;
 using System.Reflection;
 using MetroFramework.Controls;
-using DevComponents.DotNetBar;
 
 namespace cnblogbackup
 {
-    public partial class ConfigureForm : MetroForm
+    partial class ConfigureForm : MetroForm
     {
         private Dictionary<string, string> blogs_dict;
         private MetroLink last_click = null;
+        public delegate void UpdatePanel(List<Numhome> list);
+        public UpdatePanel my_delegate;
         public ConfigureForm()
         {
             InitializeComponent();
-            //blogs_dict= new Dictionary<string, List<post>>();
             blogs_dict = new Dictionary<string, string>();
             ReadXml();
             FillDisplayFlow();
+            my_delegate = new UpdatePanel(UpdataPanelMethod);
+        }
+
+        public void UpdataPanelMethod(List<Numhome> _list)
+        {
+            XmlDocument xml_doc = new XmlDocument();
+            xml_doc.Load("../../lib/Configure.xml");
+            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+            foreach (Numhome temp in _list)
+            {
+                blogs_dict.Add(temp.number, temp.home);
+                NamePanel.Controls.Add(GetLink(temp.number));
+
+                XmlElement blog_home = xml_doc.CreateElement("cnblogs");
+                blog_home.SetAttribute("number", temp.number);
+                blog_home.SetAttribute("home", temp.home);
+                root_node.AppendChild(blog_home);
+            }
+            xml_doc.Save("../../lib/Configure.xml");
         }
 
         private void PathConfButton_Click(object sender, EventArgs e)
@@ -35,8 +54,11 @@ namespace cnblogbackup
             if (PathBroswerDialog.ShowDialog() == DialogResult.OK)
             {
                 PathTextBox.Text = PathBroswerDialog.SelectedPath;
+
             }
         }
+
+
         /// <summary>
         /// Read xml from "../../lib/Configure.xml" 
         /// A standard xml look like this:
@@ -76,7 +98,12 @@ namespace cnblogbackup
             }
             catch (System.Xml.XmlException)
             {
-
+                //create a xml file
+                XmlNode node = xml_doc.CreateXmlDeclaration("1.0", "utf-8", "");
+                xml_doc.AppendChild(node);
+                XmlNode root_node = xml_doc.CreateElement("students");
+                xml_doc.AppendChild(root_node);
+                xml_doc.Save("../../lib/Configure.xml");
             }
         }
 
@@ -187,11 +214,22 @@ namespace cnblogbackup
 
             }
         }
+
+        private void NamePanel_MouseEnter(object sender, EventArgs e)
+        {
+            NamePanel.Focus();
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            AddForm add_form = new AddForm(this);
+            add_form.ShowDialog();
+        }
     }
-    class post
+    class Numhome
     {
-        public string title { get; set; }
-        public string link { get; set; }
+        public string number { get; set; }
+        public string home { get; set; }
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <students>
-  <cnblogs number="13061193" home="http://www.cnblogs.com/SivilTaram/233">
+  <cnblogs number="1" home="http://www.cnblogs.com/SivilTaram/233">
     <link title="我的第一篇文章">
 			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
 		</link>
@@ -8,7 +8,7 @@
 			http://www.cnblogs.com/SivilTaram/p/5120044.html
 		</link>
   </cnblogs>
-  <cnblogs number="130611928811" home="http://www.cnblogs.com/SivilTarm/21">
+  <cnblogs number="3" home="http://www.cnblogs.com/SivilTarm/">
     <link title="我的第一篇文章">
 			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
 		</link>
@@ -16,12 +16,6 @@
 			http://www.cnblogs.com/SivilTaram/p/5120044.html
 		</link>
   </cnblogs>
-  <cnblogs number="1306119277" home="http://www.cnblogs.com/SivilTarm/">
-    <link title="我的第一篇文章">
-			http://www.cnblogs.com/SivilTaram/p/advice_for_software.html
-		</link>
-    <link title="我的第二篇文章">
-			http://www.cnblogs.com/SivilTaram/p/5120044.html
-		</link>
-  </cnblogs>
+  <cnblogs number="14061193" home="http://cnblogs.com/Httpp" />
+  <cnblogs number="11111111111" home="http://cnblogs.com/Httpp" />
 </students>
