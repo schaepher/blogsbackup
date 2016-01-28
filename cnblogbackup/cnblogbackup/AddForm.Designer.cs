@@ -43,6 +43,7 @@
             this.PathTextBox = new MetroFramework.Controls.MetroTextBox();
             this.SetPathLink = new MetroFramework.Controls.MetroLink();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.CommentImportButton = new MetroFramework.Controls.MetroButton();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -196,7 +197,7 @@
             // CsvImportButton
             // 
             this.CsvImportButton.Highlight = false;
-            this.CsvImportButton.Location = new System.Drawing.Point(138, 275);
+            this.CsvImportButton.Location = new System.Drawing.Point(73, 275);
             this.CsvImportButton.Name = "CsvImportButton";
             this.CsvImportButton.Size = new System.Drawing.Size(111, 40);
             this.CsvImportButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -209,13 +210,13 @@
             // HttpImportButton
             // 
             this.HttpImportButton.Highlight = false;
-            this.HttpImportButton.Location = new System.Drawing.Point(312, 275);
+            this.HttpImportButton.Location = new System.Drawing.Point(225, 275);
             this.HttpImportButton.Name = "HttpImportButton";
             this.HttpImportButton.Size = new System.Drawing.Size(112, 40);
             this.HttpImportButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.HttpImportButton.StyleManager = null;
             this.HttpImportButton.TabIndex = 5;
-            this.HttpImportButton.Text = "网址导入";
+            this.HttpImportButton.Text = "博客导入";
             this.HttpImportButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.HttpImportButton.Click += new System.EventHandler(this.HttpImportButton_Click);
             // 
@@ -296,11 +297,25 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // CommentImportButton
+            // 
+            this.CommentImportButton.Highlight = false;
+            this.CommentImportButton.Location = new System.Drawing.Point(387, 275);
+            this.CommentImportButton.Name = "CommentImportButton";
+            this.CommentImportButton.Size = new System.Drawing.Size(112, 40);
+            this.CommentImportButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.CommentImportButton.StyleManager = null;
+            this.CommentImportButton.TabIndex = 10;
+            this.CommentImportButton.Text = "评论区导入";
+            this.CommentImportButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.CommentImportButton.Click += new System.EventHandler(this.CommentImportButton_Click);
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(541, 338);
+            this.Controls.Add(this.CommentImportButton);
             this.Controls.Add(this.SetPathLink);
             this.Controls.Add(this.PathTextBox);
             this.Controls.Add(this.用户名);
@@ -340,5 +355,6 @@
         private MetroFramework.Controls.MetroTextBox PathTextBox;
         private MetroFramework.Controls.MetroLink SetPathLink;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private MetroFramework.Controls.MetroButton CommentImportButton;
     }
 }

@@ -88,7 +88,7 @@ namespace cnblogbackup
         private void HttpImportButton_Click(object sender, EventArgs e)
         {
             string post_url = PathTextBox.Text;
-            Dictionary<string,string> num_home = BlogsParser.NumberHomepageDic(post_url, Options.FromBlogContent);
+            Dictionary<string,string> num_home = BlogsParser.NumberHomepageDic(post_url, BlogsParser.Options.FromBlogContent);
             List<blog> result = new List<blog>(num_home.Count);
             foreach (string key in num_home.Keys)
             {
@@ -99,6 +99,22 @@ namespace cnblogbackup
                 });
             }
             main_form_control.Invoke(main_form_control.my_delegate,result);
+        }
+
+        private void CommentImportButton_Click(object sender, EventArgs e)
+        {
+            string post_url = PathTextBox.Text;
+            Dictionary<string, string> num_home = BlogsParser.NumberHomepageDic(post_url, BlogsParser.Options.FromBlogComment);
+            List<blog> result = new List<blog>(num_home.Count);
+            foreach (string key in num_home.Keys)
+            {
+                result.Add(new blog
+                {
+                    number = key,
+                    homepage = num_home[key]
+                });
+            }
+            main_form_control.Invoke(main_form_control.my_delegate, result);
         }
     }
 }

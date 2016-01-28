@@ -24,9 +24,7 @@ namespace cnblogbackup
         public ConfigureForm()
         {
             InitializeComponent();
-            blogs_dict = new Dictionary<string, string>();
-            ReadXml();
-            FillDisplayFlow();
+            InitialPanel();
             my_delegate = new UpdatePanel(UpdataPanelMethod);
         }
 
@@ -70,10 +68,8 @@ namespace cnblogbackup
             if (PathBroswerDialog.ShowDialog() == DialogResult.OK)
             {
                 PathTextBox.Text = PathBroswerDialog.SelectedPath;
-
             }
         }
-
 
         /// <summary>
         /// Read xml from "../../lib/Configure.xml" 
@@ -86,38 +82,15 @@ namespace cnblogbackup
         ///     </cnblogs> 
         /// </students>
         /// </summary>
-        private void ReadXml()
+        private void InitialPanel()
         {
             XmlDocument xml_doc = new XmlDocument();
             try
             {
                 xml_doc.Load("../../lib/Configure.xml");
                 //if load success
-                XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
-                string path;
-                if((path = ((XmlElement)root_node).GetAttribute("path"))!= null)
-                {
-                    PathTextBox.Text = path;
-                }
-                foreach (XmlNode single_blog in root_node.ChildNodes)
-                {
-                    //<cnblogs number="123456" home="http://cnblogs.com/SivilTaram">
-                    string blog_owner = single_blog.Attributes["number"].Value;
-                    string blog_home = single_blog.Attributes["home"].Value;
-                    blogs_dict.Add(blog_owner, blog_home);
-                    //List<post> blog_link = new List<post>();
-                    //foreach(XmlNode single_link in single_blog.ChildNodes)
-                    //{
-                    //    blog_link.Add(new post
-                    //    {
-                    //        title = single_link.Attributes["title"].Value,
-                    //        link  = single_link.InnerText
-                    //    });
-                    //}
-                    //blogs_dict.Add(blog_owner, blog_link);
-                }
             }
-            catch (System.Xml.XmlException)
+            catch (System.IO.FileNotFoundException)
             {
                 //create a xml file
                 XmlNode node = xml_doc.CreateXmlDeclaration("1.0", "utf-8", "");
@@ -126,16 +99,90 @@ namespace cnblogbackup
                 xml_doc.AppendChild(root_node);
                 xml_doc.Save("../../lib/Configure.xml");
             }
+            finally
+            {
+                XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+                string path;
+                if ((path = ((XmlElement)root_node).GetAttribute("path")) != null)
+                {
+                    PathTextBox.Text = path;
+                }
+                blogs_dict = ReadXmlToBlogString();
+                foreach (string key in blogs_dict.Keys)
+                {
+                    MetroLink name_label = GetLink(key);
+                    NamePanel.Controls.Add(name_label);
+                    ToolTip.SetToolTip(name_label, blogs_dict[key]);
+                }
+            }
         }
 
-        private void FillDisplayFlow()
+        public static Dictionary<string,XmlNode> ReadXmlToBlogNode(XmlDocument xml_doc)
         {
-            int y = 0;
-            foreach (string key in blogs_dict.Keys)
+            Dictionary<string,XmlNode> dict = new Dictionary<string,XmlNode>();
+            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+            foreach (XmlNode single_blog in root_node.ChildNodes)
             {
-                MetroLink name_label = GetLink(key);
-                NamePanel.Controls.Add(name_label);
-                ToolTip.SetToolTip(name_label, blogs_dict[key]);
+                //<cnblogs number="123456" home="http://cnblogs.com/SivilTaram">
+                string blog_owner = single_blog.Attributes["number"].Value;
+                XmlNode blog_node = single_blog;
+                dict.Add(blog_owner, blog_node);
+            }
+            return dict;
+        }
+
+        public static Dictionary<string,string> ReadXmlToBlogString()
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            XmlDocument xml_doc = new XmlDocument();
+            xml_doc.Load("../../lib/Configure.xml");
+            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+            foreach (XmlNode single_blog in root_node.ChildNodes)
+            {
+                //<cnblogs number="123456" home="http://cnblogs.com/SivilTaram">
+                string blog_owner = single_blog.Attributes["number"].Value;
+                string blog_home = single_blog.Attributes["home"].Value;
+                dict.Add(blog_owner, blog_home);
+            }
+            return dict;
+        }
+
+        public static Dictionary<string,string> ReadXmlToLink(string home_page)
+        {
+            Dictionary<string, string> url_title_dict = new Dictionary<string, string>();
+            XmlDocument xml_doc = new XmlDocument();
+            xml_doc.Load("../../lib/Configure.xml");
+            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+            foreach (XmlNode single_blog in root_node.ChildNodes)
+            {
+                if( home_page == single_blog.Attributes["home"].Value)
+                {
+                    foreach(XmlNode single_link in single_blog.ChildNodes)
+                    {
+                        string title = ((XmlElement)single_link).Attributes["title"].Value;
+                        string url = ((XmlElement)single_link).InnerText;
+                        url_title_dict.Add(url, title);
+                    }
+                    return url_title_dict;
+                }
+            }
+            // if count = 0;
+            return url_title_dict;
+        }
+
+        public static string ReadXmlToPath()
+        {
+            XmlDocument xml_doc = new XmlDocument();
+            xml_doc.Load("../../lib/Configure.xml");
+            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+            string path;
+            if ((path = ((XmlElement)root_node).GetAttribute("path")) != null)
+            {
+                return path;
+            }
+            else
+            {
+                return "";
             }
         }
 

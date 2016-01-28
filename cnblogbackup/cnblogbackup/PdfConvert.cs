@@ -143,7 +143,7 @@ namespace Codaxy.WkHtmlToPdf
                     {
                         TempFolderPath = Path.GetTempPath(),
                         WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
-                        Timeout = 60000
+                        Timeout = 60000000
                     };
                 return _e;
             }
@@ -303,7 +303,7 @@ namespace Codaxy.WkHtmlToPdf
 
                     if (process.WaitForExit(environment.Timeout) && errorWaitHandle.WaitOne())
                     {
-                        if (process.ExitCode != 0)
+                        if (process.ExitCode != 0 && process.ExitCode!=1)
                             throw new PdfConvertException(
                                 String.Format("Html to PDF conversion of document failed. Wkhtmltopdf output: \r\n{1}",
                                 document.Url, error));

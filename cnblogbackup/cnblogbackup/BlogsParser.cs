@@ -3,15 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace cnblogbackup
 {
-    public enum Options
-    {
-        FromBlogContent,
-        FromBlogComment
-    }
-
     public class BlogsParser
     {
         private static WebClient client = null;
@@ -31,7 +26,6 @@ namespace cnblogbackup
                 string pattern = "HomePageDays_DaysList_ctl\\d+_DayList_TitleUrl_0\" class=\"postTitle2\" href=\"(.+?)\">(.+?)</a>";
                 temp = GetDictionary(html, pattern);
                 dic = dic.Concat(temp).ToDictionary(k => k.Key, v => v.Value);
-
                 string nextPageTail = GetNextPage(html);
                 if (nextPageTail != "")
                     url = baseUrl + nextPageTail;
@@ -40,19 +34,42 @@ namespace cnblogbackup
             }
             return dic;
         }
-
+        
+        public enum Options { FromBlogContent, FromBlogComment };
+        
         public static Dictionary<string, string> NumberHomepageDic(string url, Options option)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            string html = GetHtml(url);
             string pattern;
+            string html;
             switch (option)
             {
                 case Options.FromBlogContent:
+                    html = GetHtml(url);
                     pattern = "(\\d+)\\s*<a href=\"(.+?)\"";
                     dic = GetDictionary(html, pattern);
                     break;
                 case Options.FromBlogComment:
+                    pattern = "http://www.cnblogs.com/(.+?)/p/(\\d+).html";
+                    Regex rgx = new Regex(pattern);
+                    GroupCollection groups = rgx.Match(url, 0).Groups;
+                    string postId = groups[2].Value;
+                    string blogApp = groups[1].Value;
+                    string baseUrl = "http://www.cnblogs.com/mvc/blog/GetComments.aspx?postId=" + postId + "&blogApp=" + blogApp + "&pageIndex=";
+                    var tempEntity = new { commentCount = 0, commentsHtml = string.Empty };
+                    int pageIndex = 1;
+                    Dictionary<string, string> temp;
+                    do
+                    {
+                        url = baseUrl + pageIndex;
+                        html = GetHtml(url);
+                        tempEntity = JsonHelper.DeserializeAnonymousType(html, tempEntity);
+                        html = tempEntity.commentsHtml;
+                        pattern = "comment_body\">(\\d{3,}).+?(http://www.cnblogs.com/.+?)[/|\"].+?</div>";
+                        temp = GetDictionary(html, pattern);
+                        dic = dic.Union(temp).ToDictionary(k => k.Key, v => v.Value);
+                        pageIndex++;
+                    } while (temp.Count != 0);
                     break;
                 default:
                     break;
@@ -106,6 +123,21 @@ namespace cnblogbackup
             return nextPageTail;
         }
 
+        public class JsonHelper
+        {
+
+            public static T DeserializeAnonymousType<T>(string json, T anonymousTypeObject)
+            {
+                T t = JsonConvert.DeserializeAnonymousType(json, anonymousTypeObject);
+                return t;
+            }
+
+            public static string SerializeObject(object o)
+            {
+                string json = JsonConvert.SerializeObject(o);
+                return json;
+            }
+        }
 
     }
 
