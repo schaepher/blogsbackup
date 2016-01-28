@@ -23,7 +23,7 @@ namespace cnblogbackup
                 string html = GetHtml(url);
 
                 Dictionary<string, string> dicTemp = new Dictionary<string, string>();
-                string pattern = "HomePageDays_DaysList_ctl\\d+_DayList_TitleUrl_0\" class=\"postTitle2\" href=\"(.+?)\">(.+?)</a>";
+                string pattern = "postTitle.+?href=\"(.+?)\">(.+?)</a>";
                 dicTemp = GetDictionary(html, pattern);
                 dicAll = MergeDictionary(dicAll, dicTemp);
                 string nextPageTail = GetNextPage(html);
@@ -84,7 +84,7 @@ namespace cnblogbackup
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
 
-            Regex rgx = new Regex(pattern, RegexOptions.Singleline);
+            Regex rgx = new Regex(pattern, RegexOptions.Singleline|RegexOptions.IgnoreCase);
             MatchCollection matchesResults = rgx.Matches(htmlContent);
 
             foreach (Match match in matchesResults)
