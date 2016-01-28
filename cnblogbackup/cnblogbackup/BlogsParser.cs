@@ -36,7 +36,7 @@ namespace cnblogbackup
         }
         
         public enum Options { FromBlogContent, FromBlogComment };
-        
+
         public static Dictionary<string, string> NumberHomepageDic(string url, Options option)
         {
             Dictionary<string, string> dicAll = new Dictionary<string, string>();
@@ -58,15 +58,32 @@ namespace cnblogbackup
                     string baseUrl = "http://www.cnblogs.com/mvc/blog/GetComments.aspx?postId=" + postId + "&blogApp=" + blogApp + "&pageIndex=";
                     var tempEntity = new { commentCount = 0, commentsHtml = string.Empty };
                     int pageIndex = 1;
-                    Dictionary<string, string> dicTemp;
+                    Dictionary<string, string> dicTemp = new Dictionary<string, string>();
                     do
                     {
+                        dicTemp.Clear();
+
                         url = baseUrl + pageIndex;
                         html = GetHtml(url);
                         tempEntity = JsonHelper.DeserializeAnonymousType(html, tempEntity);
                         html = tempEntity.commentsHtml;
-                        pattern = "comment_body\">(\\d{3,}).+?(http://www.cnblogs.com/.+?)[/|\"].+?</div>";
-                        dicTemp = GetDictionary(html, pattern);
+                        pattern = "comment_body\">.+?</div>";
+                        MatchCollection matchesResults = Regex.Matches(html, pattern);
+                        Match tempMatch;
+                        pattern = "comment_body\">(\\d{3,}).*?<a href=\"(http://www.cnblogs.com/.+?)[/|\"].+?</div>";
+                        foreach (Match match in matchesResults)
+                        {
+                            tempMatch = Regex.Match(match.Value, pattern, RegexOptions.Singleline);
+                            if (tempMatch.Success)
+                            {
+                                GroupCollection matchGroups = tempMatch.Groups;
+                                if (dicTemp.ContainsKey(matchGroups[1].Value))
+                                    dicTemp.Remove(matchGroups[1].Value);
+
+                                dicTemp.Add(matchGroups[1].Value, matchGroups[2].Value);
+                            }
+                        }
+
                         dicAll = MergeDictionary(dicAll, dicTemp);
                         pageIndex++;
                     } while (dicTemp.Count != 0);
