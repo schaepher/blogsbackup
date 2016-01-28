@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace cnblogbackup
 {
@@ -33,9 +34,9 @@ namespace cnblogbackup
             }
             return dicAll;
         }
-
+        
         public enum Options { FromBlogContent, FromBlogComment };
-
+        
         public static Dictionary<string, string> NumberHomepageDic(string url, Options option)
         {
             Dictionary<string, string> dicAll = new Dictionary<string, string>();

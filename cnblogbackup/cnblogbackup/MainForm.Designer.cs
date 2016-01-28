@@ -33,25 +33,11 @@
             ConfigureButton = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
-            // StartButton
-            // 
-            this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.StartButton.Highlight = false;
-            this.StartButton.Location = new System.Drawing.Point(178, 102);
-            this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(230, 87);
-            this.StartButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.StartButton.StyleManager = null;
-            this.StartButton.TabIndex = 0;
-            this.StartButton.Text = "开始备份";
-            this.StartButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
-            // 
             // ConfigureButton
             // 
             ConfigureButton.Cursor = System.Windows.Forms.Cursors.Hand;
             ConfigureButton.Highlight = false;
-            ConfigureButton.Location = new System.Drawing.Point(178, 231);
+            ConfigureButton.Location = new System.Drawing.Point(63, 117);
             ConfigureButton.Name = "ConfigureButton";
             ConfigureButton.Size = new System.Drawing.Size(230, 87);
             ConfigureButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -61,11 +47,25 @@
             ConfigureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
             ConfigureButton.Click += new System.EventHandler(this.ConfigureButton_Click);
             // 
+            // StartButton
+            // 
+            this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.StartButton.Highlight = false;
+            this.StartButton.Location = new System.Drawing.Point(329, 117);
+            this.StartButton.Name = "StartButton";
+            this.StartButton.Size = new System.Drawing.Size(230, 87);
+            this.StartButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.StartButton.StyleManager = null;
+            this.StartButton.TabIndex = 0;
+            this.StartButton.Text = "开始备份";
+            this.StartButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 376);
+            this.ClientSize = new System.Drawing.Size(634, 297);
             this.Controls.Add(ConfigureButton);
             this.Controls.Add(this.StartButton);
             this.DisplayHeader = false;

@@ -40,6 +40,8 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.AddButton = new MetroFramework.Controls.MetroButton();
+            this.SaveConfButton = new MetroFramework.Controls.MetroButton();
+            this.ClearButton = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // PathTextBox
@@ -49,11 +51,11 @@
             this.PathTextBox.Enabled = false;
             this.PathTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.PathTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.PathTextBox.Location = new System.Drawing.Point(64, 76);
+            this.PathTextBox.Location = new System.Drawing.Point(64, 53);
             this.PathTextBox.Multiline = false;
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.SelectedText = "";
-            this.PathTextBox.Size = new System.Drawing.Size(332, 35);
+            this.PathTextBox.Size = new System.Drawing.Size(375, 35);
             this.PathTextBox.Style = MetroFramework.MetroColorStyle.Blue;
             this.PathTextBox.StyleManager = null;
             this.PathTextBox.TabIndex = 0;
@@ -64,10 +66,10 @@
             // 
             this.PathConfButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PathConfButton.Highlight = true;
-            this.PathConfButton.Location = new System.Drawing.Point(450, 76);
+            this.PathConfButton.Location = new System.Drawing.Point(459, 53);
             this.PathConfButton.Name = "PathConfButton";
-            this.PathConfButton.Size = new System.Drawing.Size(134, 35);
-            this.PathConfButton.Style = MetroFramework.MetroColorStyle.Red;
+            this.PathConfButton.Size = new System.Drawing.Size(125, 35);
+            this.PathConfButton.Style = MetroFramework.MetroColorStyle.Lime;
             this.PathConfButton.StyleManager = null;
             this.PathConfButton.TabIndex = 1;
             this.PathConfButton.Text = "配置存储路径";
@@ -77,24 +79,24 @@
             // ChangeButton
             // 
             this.ChangeButton.Highlight = true;
-            this.ChangeButton.Location = new System.Drawing.Point(305, 265);
+            this.ChangeButton.Location = new System.Drawing.Point(321, 235);
             this.ChangeButton.Name = "ChangeButton";
-            this.ChangeButton.Size = new System.Drawing.Size(115, 37);
+            this.ChangeButton.Size = new System.Drawing.Size(112, 37);
             this.ChangeButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ChangeButton.StyleManager = null;
             this.ChangeButton.TabIndex = 4;
-            this.ChangeButton.Text = "保存";
+            this.ChangeButton.Text = "修改";
             this.ChangeButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
             // BlogTextBox
             // 
             this.BlogTextBox.CustomBackground = false;
-            this.BlogTextBox.CustomForeColor = false;
-            this.BlogTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.BlogTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Bold;
+            this.BlogTextBox.CustomForeColor = true;
+            this.BlogTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.BlogTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.BlogTextBox.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.BlogTextBox.Location = new System.Drawing.Point(321, 203);
+            this.BlogTextBox.Location = new System.Drawing.Point(321, 177);
             this.BlogTextBox.Multiline = false;
             this.BlogTextBox.Name = "BlogTextBox";
             this.BlogTextBox.SelectedText = "";
@@ -108,12 +110,18 @@
             // 
             // NamePanel
             // 
+            this.NamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NamePanel.AutoScroll = true;
             this.NamePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.NamePanel.Location = new System.Drawing.Point(64, 145);
+            this.NamePanel.Location = new System.Drawing.Point(64, 105);
             this.NamePanel.Name = "NamePanel";
-            this.NamePanel.Size = new System.Drawing.Size(167, 185);
+            this.NamePanel.Size = new System.Drawing.Size(180, 223);
             this.NamePanel.TabIndex = 7;
+            this.NamePanel.WrapContents = false;
+            this.NamePanel.Click += new System.EventHandler(this.NamePanel_MouseEnter);
+            this.NamePanel.MouseEnter += new System.EventHandler(this.NamePanel_MouseEnter);
             // 
             // ToolTip
             // 
@@ -124,10 +132,10 @@
             // RemoveButton
             // 
             this.RemoveButton.Highlight = true;
-            this.RemoveButton.Location = new System.Drawing.Point(459, 265);
+            this.RemoveButton.Location = new System.Drawing.Point(321, 291);
             this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(115, 37);
-            this.RemoveButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.RemoveButton.Size = new System.Drawing.Size(112, 37);
+            this.RemoveButton.Style = MetroFramework.MetroColorStyle.Red;
             this.RemoveButton.StyleManager = null;
             this.RemoveButton.TabIndex = 8;
             this.RemoveButton.Text = "删除";
@@ -138,9 +146,9 @@
             // 
             this.NumberTextBox.CustomBackground = false;
             this.NumberTextBox.CustomForeColor = false;
-            this.NumberTextBox.FontSize = MetroFramework.MetroTextBoxSize.Small;
-            this.NumberTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Bold;
-            this.NumberTextBox.Location = new System.Drawing.Point(321, 161);
+            this.NumberTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.NumberTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
+            this.NumberTextBox.Location = new System.Drawing.Point(321, 123);
             this.NumberTextBox.Multiline = false;
             this.NumberTextBox.Name = "NumberTextBox";
             this.NumberTextBox.SelectedText = "";
@@ -160,7 +168,7 @@
             this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.metroLabel1.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel1.Location = new System.Drawing.Point(269, 167);
+            this.metroLabel1.Location = new System.Drawing.Point(269, 129);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(37, 19);
             this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
@@ -178,7 +186,7 @@
             this.metroLabel2.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel2.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel2.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel2.Location = new System.Drawing.Point(250, 214);
+            this.metroLabel2.Location = new System.Drawing.Point(250, 188);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(65, 19);
             this.metroLabel2.Style = MetroFramework.MetroColorStyle.Blue;
@@ -191,20 +199,49 @@
             // AddButton
             // 
             this.AddButton.Highlight = true;
-            this.AddButton.Location = new System.Drawing.Point(379, 327);
+            this.AddButton.Location = new System.Drawing.Point(459, 235);
             this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(115, 37);
+            this.AddButton.Size = new System.Drawing.Size(111, 37);
             this.AddButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.AddButton.StyleManager = null;
             this.AddButton.TabIndex = 12;
             this.AddButton.Text = "添加";
             this.AddButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
+            // SaveConfButton
+            // 
+            this.SaveConfButton.Highlight = false;
+            this.SaveConfButton.Location = new System.Drawing.Point(245, 371);
+            this.SaveConfButton.Name = "SaveConfButton";
+            this.SaveConfButton.Size = new System.Drawing.Size(194, 51);
+            this.SaveConfButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.SaveConfButton.StyleManager = null;
+            this.SaveConfButton.TabIndex = 13;
+            this.SaveConfButton.Text = "保存配置";
+            this.SaveConfButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.SaveConfButton.Click += new System.EventHandler(this.SaveConfButton_Click);
+            // 
+            // ClearButton
+            // 
+            this.ClearButton.Highlight = true;
+            this.ClearButton.Location = new System.Drawing.Point(459, 291);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(111, 37);
+            this.ClearButton.Style = MetroFramework.MetroColorStyle.Red;
+            this.ClearButton.StyleManager = null;
+            this.ClearButton.TabIndex = 14;
+            this.ClearButton.Text = "清空";
+            this.ClearButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // ConfigureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(656, 422);
+            this.ClientSize = new System.Drawing.Size(670, 445);
+            this.Controls.Add(this.ClearButton);
+            this.Controls.Add(this.SaveConfButton);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.metroLabel1);
@@ -240,5 +277,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroButton AddButton;
+        private MetroFramework.Controls.MetroButton SaveConfButton;
+        private MetroFramework.Controls.MetroButton ClearButton;
     }
 }
