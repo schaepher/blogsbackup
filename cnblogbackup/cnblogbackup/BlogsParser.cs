@@ -12,7 +12,7 @@ namespace cnblogbackup
 
         public static Dictionary<string, string> UrlTitleDic(string baseUrl)
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+            Dictionary<string, string> dicAll = new Dictionary<string, string>();
 
             string pageTail = "?page=1";
             string url = baseUrl + pageTail;
@@ -21,24 +21,24 @@ namespace cnblogbackup
             {
                 string html = GetHtml(url);
 
-                Dictionary<string, string> temp = new Dictionary<string, string>();
+                Dictionary<string, string> dicTemp = new Dictionary<string, string>();
                 string pattern = "HomePageDays_DaysList_ctl\\d+_DayList_TitleUrl_0\" class=\"postTitle2\" href=\"(.+?)\">(.+?)</a>";
-                temp = GetDictionary(html, pattern);
-                dic = dic.Concat(temp).ToDictionary(k => k.Key, v => v.Value);
+                dicTemp = GetDictionary(html, pattern);
+                dicAll = MergeDictionary(dicAll, dicTemp);
                 string nextPageTail = GetNextPage(html);
                 if (nextPageTail != "")
                     url = baseUrl + nextPageTail;
                 else
                     break;
             }
-            return dic;
+            return dicAll;
         }
 
         public enum Options { FromBlogContent, FromBlogComment };
 
         public static Dictionary<string, string> NumberHomepageDic(string url, Options option)
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+            Dictionary<string, string> dicAll = new Dictionary<string, string>();
             string pattern;
             string html;
             switch (option)
@@ -46,7 +46,7 @@ namespace cnblogbackup
                 case Options.FromBlogContent:
                     html = GetHtml(url);
                     pattern = "(\\d+)\\s*<a href=\"(.+?)\"";
-                    dic = GetDictionary(html, pattern);
+                    dicAll = GetDictionary(html, pattern);
                     break;
                 case Options.FromBlogComment:
                     pattern = "http://www.cnblogs.com/(.+?)/p/(\\d+).html";
@@ -57,7 +57,7 @@ namespace cnblogbackup
                     string baseUrl = "http://www.cnblogs.com/mvc/blog/GetComments.aspx?postId=" + postId + "&blogApp=" + blogApp + "&pageIndex=";
                     var tempEntity = new { commentCount = 0, commentsHtml = string.Empty };
                     int pageIndex = 1;
-                    Dictionary<string, string> temp;
+                    Dictionary<string, string> dicTemp;
                     do
                     {
                         url = baseUrl + pageIndex;
@@ -65,16 +65,16 @@ namespace cnblogbackup
                         tempEntity = JsonHelper.DeserializeAnonymousType(html, tempEntity);
                         html = tempEntity.commentsHtml;
                         pattern = "comment_body\">(\\d{3,}).+?(http://www.cnblogs.com/.+?)[/|\"].+?</div>";
-                        temp = GetDictionary(html, pattern);
-                        dic = dic.Union(temp).ToDictionary(k => k.Key, v => v.Value);
+                        dicTemp = GetDictionary(html, pattern);
+                        dicAll = MergeDictionary(dicAll, dicTemp);
                         pageIndex++;
-                    } while (temp.Count != 0);
+                    } while (dicTemp.Count != 0);
                     break;
                 default:
                     break;
             }
 
-            Dictionary<string, string> dicSorted = dic.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
+            Dictionary<string, string> dicSorted = dicAll.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
 
             return dicSorted;
         }
@@ -136,6 +136,19 @@ namespace cnblogbackup
                 string json = JsonConvert.SerializeObject(o);
                 return json;
             }
+        }
+
+        public static Dictionary<string, string> MergeDictionary(Dictionary<string, string> first, Dictionary<string, string> second)
+        {
+            if (second == null) return first;
+
+            foreach (KeyValuePair<string, string> kvp in second)
+            {
+                if (first.ContainsKey(kvp.Key))
+                    first.Remove(kvp.Key);
+                first.Add(kvp.Key, kvp.Value);
+            }
+            return first;
         }
 
     }
