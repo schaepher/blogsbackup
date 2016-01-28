@@ -36,19 +36,19 @@ namespace cnblogbackup
 
         public enum Options { FromBlogContent, FromBlogComment };
 
-        public static Dictionary<string, string> NumberHomepageDic(string url, int option)
+        public static Dictionary<string, string> NumberHomepageDic(string url, Options option)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             string pattern;
             string html;
             switch (option)
             {
-                case (int)Options.FromBlogContent:
+                case Options.FromBlogContent:
                     html = GetHtml(url);
                     pattern = "(\\d+)\\s*<a href=\"(.+?)\"";
                     dic = GetDictionary(html, pattern);
                     break;
-                case (int)Options.FromBlogComment:
+                case Options.FromBlogComment:
                     pattern = "http://www.cnblogs.com/(.+?)/p/(\\d+).html";
                     Regex rgx = new Regex(pattern);
                     GroupCollection groups = rgx.Match(url, 0).Groups;
