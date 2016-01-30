@@ -314,15 +314,23 @@ namespace cnblogbackup
         }
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            blogs_dict.Clear();
-            NamePanel.Controls.Clear();
-            XmlDocument xml_doc = new XmlDocument();
-            xml_doc.Load("../../lib/Configure.xml");
-            XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
-            root_node.RemoveAll();
-            xml_doc.Save("../../lib/Configure.xml");
-            NumberTextBox.Text = "";
-            BlogTextBox.Text = "";
+            if (MessageBox.Show(this, "确认要清空列表吗?", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                blogs_dict.Clear();
+                NamePanel.Controls.Clear();
+                XmlDocument xml_doc = new XmlDocument();
+                xml_doc.Load("../../lib/Configure.xml");
+                XmlNode root_node = xml_doc.DocumentElement.SelectSingleNode("/students");
+                root_node.RemoveAll();
+                xml_doc.Save("../../lib/Configure.xml");
+                NumberTextBox.Text = "";
+                BlogTextBox.Text = "";
+            }
+        }
+
+        private void NamePanel_Layout(object sender, LayoutEventArgs e)
+        {
+            CountButton.Text = "人数:" + blogs_dict.Count;
         }
     }
     class blog

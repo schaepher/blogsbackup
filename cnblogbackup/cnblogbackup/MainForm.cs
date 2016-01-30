@@ -18,16 +18,18 @@ namespace cnblogbackup
     public partial class MainForm : MetroForm
     {
         private List<Task> task_set = null;
-        public delegate void UpdateProgress(string _link_url);
+        public delegate void UpdateProgress(string _link_url,string _title);
         public UpdateProgress my_delegate;
         public delegate void UpdateMax(int input);
         public UpdateMax max_delegate;
         private XmlDocument root_xml_doc = null;
 
-        private void UpdateProgressMethod(string _link_url)
+        private void UpdateProgressMethod(string _link_url,string _title)
         {
             this.ProgressBar.Value += 1;
-            log("完成对" + _link_url + "的保存备份");
+            log("完成对" + _title + "的保存"
+                + Environment.NewLine
+                + "文章链接:" + _link_url);
             if (ProgressBar.Value == ProgressBar.Maximum)
             {
                 ProgressBar.Style = MetroFramework.MetroColorStyle.Red;
@@ -68,13 +70,13 @@ namespace cnblogbackup
                 for (int i = 0; i < tasks_info.Count; i++)
                 {
                     TaskInfo info = tasks_info[i];
-                    task_set[i].Start();
                     task_set[i].ContinueWith((task) => TaskEnded(this, info.user, info.xml_doc, info.title, info.link_url));
+                    task_set[i].RunSynchronously();
                 }
             }
             else
             {
-                MessageBox.Show("找不到要备份的博客！");
+                MessageBox.Show("没有新的博客需要备份！");
             }
         }
 
@@ -156,14 +158,14 @@ namespace cnblogbackup
         }
         private void log(string text)
         {
-            LogText.Text += Environment.NewLine +DateTime.Now.ToShortDateString() + " " +text;
+            LogText.Text += Environment.NewLine +DateTime.Now.ToShortTimeString() + " " +text;
         }
 
         private void TaskEnded(MainForm _main_form_control, XmlNode _user, XmlDocument _xml_doc, string _title, string _link_url)
         {
             _user.AppendChild(GetLinkNode(_xml_doc, _title, _link_url));
             //Update progress and log's text
-            _main_form_control.Invoke(_main_form_control.my_delegate, new object[] { _link_url });
+            _main_form_control.Invoke(_main_form_control.my_delegate, new object[] { _link_url , _title});
         }
 
         private void LogText_TextChanged(object sender, EventArgs e)
