@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using cnblogbackup;
 
 namespace Codaxy.WkHtmlToPdf
 {
@@ -143,7 +144,8 @@ namespace Codaxy.WkHtmlToPdf
                     {
                         TempFolderPath = Path.GetTempPath(),
                         WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
-                        Timeout = 60000000
+                        //10s means time out.
+                        Timeout = 30000
                     };
                 return _e;
             }
@@ -303,7 +305,7 @@ namespace Codaxy.WkHtmlToPdf
 
                     if (process.WaitForExit(environment.Timeout) && errorWaitHandle.WaitOne())
                     {
-                        if (process.ExitCode != 0 && process.ExitCode!=1)
+                        if (process.ExitCode != 0)
                             throw new PdfConvertException(
                                 String.Format("Html to PDF conversion of document failed. Wkhtmltopdf output: \r\n{1}",
                                 document.Url, error));
@@ -330,7 +332,6 @@ namespace Codaxy.WkHtmlToPdf
                     {
                         if (!process.HasExited)
                             process.Kill();
-
                         throw new PdfConvertTimeoutException();
                     }
 
@@ -346,9 +347,21 @@ namespace Codaxy.WkHtmlToPdf
         /// </summary>
         /// <param name="document">The PDF input document.</param>
         /// <param name="output">An object holding the output settings.</param>
-        public static Task ConvertHtmlToPdfAsync(PdfDocument document, PdfOutput output)
+        public static Task ConvertHtmlToPdfAsync(PdfDocument document, PdfOutput output,MainForm _main_control)
         {
-            return new Task(() => ConvertHtmlToPdf(document, null, output));
+            Task temp = new Task(() =>
+            {
+                try
+                {
+                    ConvertHtmlToPdf(document, null, output);
+                }
+                catch (PdfConvertTimeoutException)
+                {
+                    _main_control.Invoke(_main_control.pdf_exception_delegate,new object[] { document.Url,""});
+                }
+            }
+            );
+            return temp;
         }
 
         /// <summary
