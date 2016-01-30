@@ -348,10 +348,7 @@ namespace Codaxy.WkHtmlToPdf
         /// <param name="output">An object holding the output settings.</param>
         public static Task ConvertHtmlToPdfAsync(PdfDocument document, PdfOutput output)
         {
-            return Task.Factory.StartNew(() =>
-            {
-                ConvertHtmlToPdf(document, null, output);
-            });
+            return new Task(() => ConvertHtmlToPdf(document, null, output));
         }
 
         /// <summary>
