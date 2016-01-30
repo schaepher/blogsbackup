@@ -21,9 +21,8 @@ namespace cnblogbackup
             while (true)
             {
                 string html = GetHtml(url);
-
                 Dictionary<string, string> dicTemp = new Dictionary<string, string>();
-                string pattern = "postTitle.+?href=\"(.+?)\">(.+?)</a>";
+                string pattern = "DayList_TitleUrl.+?href=\"(.+?)\">(.+?)</a>";
                 dicTemp = GetDictionary(html, pattern);
                 dicAll = MergeDictionary(dicAll, dicTemp);
                 string nextPageTail = GetNextPage(html);

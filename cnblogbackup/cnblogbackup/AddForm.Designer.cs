@@ -44,7 +44,10 @@
             this.SetPathLink = new MetroFramework.Controls.MetroLink();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.CommentImportButton = new MetroFramework.Controls.MetroButton();
+            this.metroToolTip = new MetroFramework.Components.MetroToolTip();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.metroPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // metroPanel1
@@ -65,6 +68,7 @@
             this.metroPanel1.StyleManager = null;
             this.metroPanel1.TabIndex = 0;
             this.metroPanel1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToolTip.SetToolTip(this.metroPanel1, "暂时只支持博客园");
             this.metroPanel1.VerticalScrollbar = false;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
@@ -75,6 +79,7 @@
             this.CustomRadio.AutoSize = true;
             this.CustomRadio.CustomBackground = false;
             this.CustomRadio.CustomForeColor = false;
+            this.CustomRadio.Enabled = false;
             this.CustomRadio.FontSize = MetroFramework.MetroLinkSize.Small;
             this.CustomRadio.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.CustomRadio.Location = new System.Drawing.Point(27, 123);
@@ -86,6 +91,7 @@
             this.CustomRadio.TabStop = true;
             this.CustomRadio.Text = "自定义域名";
             this.CustomRadio.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToolTip.SetToolTip(this.CustomRadio, "暂时只支持博客园");
             this.CustomRadio.UseStyleColors = false;
             this.CustomRadio.UseVisualStyleBackColor = true;
             // 
@@ -94,6 +100,7 @@
             this.GithubRadio.AutoSize = true;
             this.GithubRadio.CustomBackground = false;
             this.GithubRadio.CustomForeColor = false;
+            this.GithubRadio.Enabled = false;
             this.GithubRadio.FontSize = MetroFramework.MetroLinkSize.Small;
             this.GithubRadio.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.GithubRadio.Location = new System.Drawing.Point(27, 53);
@@ -105,6 +112,7 @@
             this.GithubRadio.TabStop = true;
             this.GithubRadio.Text = "Github博客";
             this.GithubRadio.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToolTip.SetToolTip(this.GithubRadio, "暂时只支持博客园");
             this.GithubRadio.UseStyleColors = false;
             this.GithubRadio.UseVisualStyleBackColor = true;
             // 
@@ -113,6 +121,7 @@
             this.CsdnRadio.AutoSize = true;
             this.CsdnRadio.CustomBackground = false;
             this.CsdnRadio.CustomForeColor = false;
+            this.CsdnRadio.Enabled = false;
             this.CsdnRadio.FontSize = MetroFramework.MetroLinkSize.Small;
             this.CsdnRadio.FontWeight = MetroFramework.MetroLinkWeight.Regular;
             this.CsdnRadio.Location = new System.Drawing.Point(27, 89);
@@ -124,6 +133,7 @@
             this.CsdnRadio.TabStop = true;
             this.CsdnRadio.Text = "CSDN博客";
             this.CsdnRadio.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToolTip.SetToolTip(this.CsdnRadio, "暂时只支持博客园");
             this.CsdnRadio.UseStyleColors = false;
             this.CsdnRadio.UseVisualStyleBackColor = true;
             // 
@@ -143,6 +153,7 @@
             this.CnblogRadio.TabStop = true;
             this.CnblogRadio.Text = "博客园";
             this.CnblogRadio.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroToolTip.SetToolTip(this.CnblogRadio, "暂时只支持博客园");
             this.CnblogRadio.UseStyleColors = false;
             this.CnblogRadio.UseVisualStyleBackColor = true;
             // 
@@ -152,11 +163,11 @@
             this.NumberTextBox.CustomForeColor = false;
             this.NumberTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.NumberTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.NumberTextBox.Location = new System.Drawing.Point(273, 52);
+            this.NumberTextBox.Location = new System.Drawing.Point(270, 82);
             this.NumberTextBox.Multiline = false;
             this.NumberTextBox.Name = "NumberTextBox";
             this.NumberTextBox.SelectedText = "";
-            this.NumberTextBox.Size = new System.Drawing.Size(218, 30);
+            this.NumberTextBox.Size = new System.Drawing.Size(166, 30);
             this.NumberTextBox.Style = MetroFramework.MetroColorStyle.White;
             this.NumberTextBox.StyleManager = null;
             this.NumberTextBox.TabIndex = 1;
@@ -170,11 +181,11 @@
             this.UserTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.UserTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.UserTextBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.UserTextBox.Location = new System.Drawing.Point(273, 94);
+            this.UserTextBox.Location = new System.Drawing.Point(269, 141);
             this.UserTextBox.Multiline = false;
             this.UserTextBox.Name = "UserTextBox";
             this.UserTextBox.SelectedText = "";
-            this.UserTextBox.Size = new System.Drawing.Size(218, 30);
+            this.UserTextBox.Size = new System.Drawing.Size(166, 30);
             this.UserTextBox.Style = MetroFramework.MetroColorStyle.White;
             this.UserTextBox.StyleManager = null;
             this.UserTextBox.TabIndex = 2;
@@ -183,11 +194,11 @@
             // 
             // AddedButton
             // 
-            this.AddedButton.Highlight = true;
-            this.AddedButton.Location = new System.Drawing.Point(324, 154);
+            this.AddedButton.Highlight = false;
+            this.AddedButton.Location = new System.Drawing.Point(473, 90);
             this.AddedButton.Name = "AddedButton";
-            this.AddedButton.Size = new System.Drawing.Size(112, 34);
-            this.AddedButton.Style = MetroFramework.MetroColorStyle.Silver;
+            this.AddedButton.Size = new System.Drawing.Size(116, 64);
+            this.AddedButton.Style = MetroFramework.MetroColorStyle.Black;
             this.AddedButton.StyleManager = null;
             this.AddedButton.TabIndex = 3;
             this.AddedButton.Text = "添加";
@@ -196,10 +207,11 @@
             // 
             // CsvImportButton
             // 
+            this.CsvImportButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CsvImportButton.Highlight = false;
-            this.CsvImportButton.Location = new System.Drawing.Point(73, 275);
+            this.CsvImportButton.Location = new System.Drawing.Point(73, 319);
             this.CsvImportButton.Name = "CsvImportButton";
-            this.CsvImportButton.Size = new System.Drawing.Size(111, 40);
+            this.CsvImportButton.Size = new System.Drawing.Size(135, 52);
             this.CsvImportButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.CsvImportButton.StyleManager = null;
             this.CsvImportButton.TabIndex = 4;
@@ -209,10 +221,11 @@
             // 
             // HttpImportButton
             // 
+            this.HttpImportButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HttpImportButton.Highlight = false;
-            this.HttpImportButton.Location = new System.Drawing.Point(225, 275);
+            this.HttpImportButton.Location = new System.Drawing.Point(225, 319);
             this.HttpImportButton.Name = "HttpImportButton";
-            this.HttpImportButton.Size = new System.Drawing.Size(112, 40);
+            this.HttpImportButton.Size = new System.Drawing.Size(143, 52);
             this.HttpImportButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.HttpImportButton.StyleManager = null;
             this.HttpImportButton.TabIndex = 5;
@@ -229,7 +242,7 @@
             this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel1.ForeColor = System.Drawing.Color.Coral;
             this.metroLabel1.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel1.Location = new System.Drawing.Point(225, 54);
+            this.metroLabel1.Location = new System.Drawing.Point(211, 90);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(37, 19);
             this.metroLabel1.Style = MetroFramework.MetroColorStyle.Blue;
@@ -248,7 +261,7 @@
             this.用户名.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.用户名.ForeColor = System.Drawing.Color.Black;
             this.用户名.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.用户名.Location = new System.Drawing.Point(213, 103);
+            this.用户名.Location = new System.Drawing.Point(197, 149);
             this.用户名.Name = "用户名";
             this.用户名.Size = new System.Drawing.Size(51, 19);
             this.用户名.Style = MetroFramework.MetroColorStyle.Blue;
@@ -265,11 +278,11 @@
             this.PathTextBox.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.PathTextBox.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
             this.PathTextBox.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.PathTextBox.Location = new System.Drawing.Point(73, 220);
+            this.PathTextBox.Location = new System.Drawing.Point(46, 256);
             this.PathTextBox.Multiline = false;
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.SelectedText = "";
-            this.PathTextBox.Size = new System.Drawing.Size(308, 30);
+            this.PathTextBox.Size = new System.Drawing.Size(364, 30);
             this.PathTextBox.Style = MetroFramework.MetroColorStyle.Blue;
             this.PathTextBox.StyleManager = null;
             this.PathTextBox.TabIndex = 8;
@@ -282,7 +295,7 @@
             this.SetPathLink.CustomForeColor = false;
             this.SetPathLink.FontSize = MetroFramework.MetroLinkSize.Small;
             this.SetPathLink.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.SetPathLink.Location = new System.Drawing.Point(387, 227);
+            this.SetPathLink.Location = new System.Drawing.Point(429, 263);
             this.SetPathLink.Name = "SetPathLink";
             this.SetPathLink.Size = new System.Drawing.Size(122, 23);
             this.SetPathLink.Style = MetroFramework.MetroColorStyle.Teal;
@@ -299,10 +312,11 @@
             // 
             // CommentImportButton
             // 
+            this.CommentImportButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CommentImportButton.Highlight = false;
-            this.CommentImportButton.Location = new System.Drawing.Point(387, 275);
+            this.CommentImportButton.Location = new System.Drawing.Point(392, 319);
             this.CommentImportButton.Name = "CommentImportButton";
-            this.CommentImportButton.Size = new System.Drawing.Size(112, 40);
+            this.CommentImportButton.Size = new System.Drawing.Size(138, 52);
             this.CommentImportButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.CommentImportButton.StyleManager = null;
             this.CommentImportButton.TabIndex = 10;
@@ -310,11 +324,28 @@
             this.CommentImportButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.CommentImportButton.Click += new System.EventHandler(this.CommentImportButton_Click);
             // 
+            // metroToolTip
+            // 
+            this.metroToolTip.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroToolTip.StyleManager = null;
+            this.metroToolTip.Theme = MetroFramework.MetroThemeStyle.Light;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::cnblogbackup.Properties.Resources.spliter;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(-8, 212);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(640, 21);
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 338);
+            this.ClientSize = new System.Drawing.Size(630, 413);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CommentImportButton);
             this.Controls.Add(this.SetPathLink);
             this.Controls.Add(this.PathTextBox);
@@ -333,6 +364,7 @@
             this.Text = "AddForm";
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,5 +388,7 @@
         private MetroFramework.Controls.MetroLink SetPathLink;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private MetroFramework.Controls.MetroButton CommentImportButton;
+        private MetroFramework.Components.MetroToolTip metroToolTip;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

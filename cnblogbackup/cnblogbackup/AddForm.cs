@@ -58,6 +58,11 @@ namespace cnblogbackup
             // number and blogname
             string Number = NumberTextBox.Text;
             string Blog = UserTextBox.Text;
+            if(Number == "" || Blog=="")
+            {
+                MessageBox.Show("学号与博客名不能为空！");
+                return;
+            }
             if (CnblogRadio.Checked == true)
             {
                 Prefix = "http://www.cnblogs.com/" + Blog;
@@ -87,34 +92,54 @@ namespace cnblogbackup
 
         private void HttpImportButton_Click(object sender, EventArgs e)
         {
-            string post_url = PathTextBox.Text;
-            Dictionary<string,string> num_home = BlogsParser.NumberHomepageDic(post_url, BlogsParser.Options.FromBlogContent);
-            List<blog> result = new List<blog>(num_home.Count);
-            foreach (string key in num_home.Keys)
-            {
-                result.Add(new blog
+            try {
+                string post_url = PathTextBox.Text;
+                Dictionary<string, string> num_home = BlogsParser.NumberHomepageDic(post_url, BlogsParser.Options.FromBlogContent);
+                List<blog> result = new List<blog>(num_home.Count);
+                foreach (string key in num_home.Keys)
                 {
-                    number = key,
-                    homepage = num_home[key]
-                });
+                    result.Add(new blog
+                    {
+                        number = key,
+                        homepage = num_home[key]
+                    });
+                }
+                main_form_control.Invoke(main_form_control.my_delegate, result);
+                if (MessageBox.Show(this, "导入成功，是否返回主界面", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
+                {
+                    this.Close();
+                }
             }
-            main_form_control.Invoke(main_form_control.my_delegate,result);
+            catch (System.ArgumentException)
+            {
+                MessageBox.Show("博客路径不合法，请重新输入！");
+            }
         }
 
         private void CommentImportButton_Click(object sender, EventArgs e)
         {
-            string post_url = PathTextBox.Text;
-            Dictionary<string, string> num_home = BlogsParser.NumberHomepageDic(post_url, BlogsParser.Options.FromBlogComment);
-            List<blog> result = new List<blog>(num_home.Count);
-            foreach (string key in num_home.Keys)
-            {
-                result.Add(new blog
+            try {
+                string post_url = PathTextBox.Text;
+                Dictionary<string, string> num_home = BlogsParser.NumberHomepageDic(post_url, BlogsParser.Options.FromBlogComment);
+                List<blog> result = new List<blog>(num_home.Count);
+                foreach (string key in num_home.Keys)
                 {
-                    number = key,
-                    homepage = num_home[key]
-                });
+                    result.Add(new blog
+                    {
+                        number = key,
+                        homepage = num_home[key]
+                    });
+                }
+                main_form_control.Invoke(main_form_control.my_delegate, result);
+                if (MessageBox.Show(this, "导入成功，是否返回主界面", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
+                {
+                    this.Close();
+                }
             }
-            main_form_control.Invoke(main_form_control.my_delegate, result);
+            catch (System.NullReferenceException)
+            {
+                MessageBox.Show("博客路径不合法，请重新输入！");
+            }
         }
     }
 }

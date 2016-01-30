@@ -351,7 +351,7 @@ namespace Codaxy.WkHtmlToPdf
             return new Task(() => ConvertHtmlToPdf(document, null, output));
         }
 
-        /// <summary>
+        /// <summary
         /// Converts a PdfDocument object from HTML to PDf.
         /// </summary>
         /// <param name="document">The PDF input document.</param>
