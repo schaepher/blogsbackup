@@ -145,7 +145,7 @@ namespace Codaxy.WkHtmlToPdf
                         TempFolderPath = Path.GetTempPath(),
                         WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
                         //10s means time out.
-                        Timeout = 30000
+                        Timeout = 100
                     };
                 return _e;
             }
@@ -305,7 +305,7 @@ namespace Codaxy.WkHtmlToPdf
 
                     if (process.WaitForExit(environment.Timeout) && errorWaitHandle.WaitOne())
                     {
-                        if (process.ExitCode != 0)
+                        if (process.ExitCode != 0 && process.ExitCode !=1)
                             throw new PdfConvertException(
                                 String.Format("Html to PDF conversion of document failed. Wkhtmltopdf output: \r\n{1}",
                                 document.Url, error));
@@ -347,20 +347,9 @@ namespace Codaxy.WkHtmlToPdf
         /// </summary>
         /// <param name="document">The PDF input document.</param>
         /// <param name="output">An object holding the output settings.</param>
-        public static Task ConvertHtmlToPdfAsync(PdfDocument document, PdfOutput output,MainForm _main_control)
+        public static Task ConvertHtmlToPdfAsync(PdfDocument document, PdfOutput output, MainForm _main_control)
         {
-            Task temp = new Task(() =>
-            {
-                try
-                {
-                    ConvertHtmlToPdf(document, null, output);
-                }
-                catch (PdfConvertTimeoutException)
-                {
-                    _main_control.Invoke(_main_control.pdf_exception_delegate,new object[] { document.Url,""});
-                }
-            }
-            );
+            Task temp = new Task(() => ConvertHtmlToPdf(document, null, output));
             return temp;
         }
 
@@ -379,39 +368,3 @@ namespace Codaxy.WkHtmlToPdf
         }
     }
 }
-
-//class OSUtil
-//{
-//    public static string GetProgramFilesx86Path()
-//    {
-//        if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
-//        {
-//            return Environment.GetEnvironmentVariable("ProgramFiles(x86)");
-//        }
-//        return Environment.GetEnvironmentVariable("ProgramFiles");
-//    }
-//}
-
-//public static class HttpResponseExtensions
-//{
-//    public static void SendFileForDownload(this HttpResponse response, String filename, byte[] content)
-//    {
-//        SetFileDownloadHeaders(response, filename);
-//        response.OutputStream.Write(content, 0, content.Length);
-//        response.Flush();
-//    }
-
-//    public static void SendFileForDownload(this HttpResponse response, String filename)
-//    {
-//        SetFileDownloadHeaders(response, filename);
-//        response.TransmitFile(filename);
-//        response.Flush();
-//    }
-
-//    public static void SetFileDownloadHeaders(this HttpResponse response, String filename)
-//    {
-//        FileInfo fi = new FileInfo(filename);
-//        response.ContentType = "application/force-download";
-//        response.AddHeader("Content-Disposition", "attachment; filename=\"" + fi.Name + "\"");
-//    }
-//}
