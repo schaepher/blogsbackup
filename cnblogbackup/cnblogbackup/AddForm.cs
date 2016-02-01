@@ -105,7 +105,7 @@ namespace cnblogbackup
                     });
                 }
                 main_form_control.Invoke(main_form_control.my_delegate, result);
-                if (MessageBox.Show(this, "导入成功，是否返回主界面", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
+                if (MessageBox.Show(this, "导入成功，是否返回主界面", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     this.Close();
                 }
@@ -131,7 +131,7 @@ namespace cnblogbackup
                     });
                 }
                 main_form_control.Invoke(main_form_control.my_delegate, result);
-                if (MessageBox.Show(this, "导入成功，是否返回主界面", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
+                if (MessageBox.Show(this, "导入成功，是否返回主界面", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     this.Close();
                 }

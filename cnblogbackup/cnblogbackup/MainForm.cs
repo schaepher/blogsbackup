@@ -18,24 +18,35 @@ namespace cnblogbackup
     public partial class MainForm : MetroForm
     {
         private List<Task> task_set = null;
-        public delegate void UpdateProgress(string _link_url,string _title);
+        public delegate void UpdateProgress(string _link_url,string _title,bool is_success);
         public UpdateProgress my_delegate;
         public delegate void UpdateMax(int input);
         public UpdateMax max_delegate;
+        public delegate void LogAppendDelegate(Color color, string text);
         private XmlDocument root_xml_doc = null;
 
-        private void UpdateProgressMethod(string _link_url,string _title)
+        private void UpdateProgressMethod(string _link_url,string _title ,bool is_success = true)
         {
-            this.ProgressBar.Value += 1;
-            log("完成对" + _title + "的保存"
-                + Environment.NewLine
-                + "文章链接:" + _link_url);
+            if (is_success)
+            {
+                this.ProgressBar.Value += 1;
+                LogMessage("完成对" + _title + "的保存"
+                    + Environment.NewLine
+                    + "文章链接:" + _link_url);
+            }
+            else
+            {
+                this.ProgressBar.Value += 1;
+                LogError("失败！ " + _title + "保存未成功！"
+                    + Environment.NewLine
+                    + "文章链接:" + _link_url);
+            }
             if (ProgressBar.Value == ProgressBar.Maximum)
             {
                 ProgressBar.Style = MetroFramework.MetroColorStyle.Red;
                 root_xml_doc.Save("../../lib/Configure.xml");
-                log("已经完成全部备份！");
-                log("本次共爬取保存" + ProgressBar.Maximum + "份博客");
+                LogMessage("已经完成全部备份！");
+                LogMessage("本次共爬取保存" + ProgressBar.Maximum + "份博客");
             }
         }
 
@@ -43,7 +54,7 @@ namespace cnblogbackup
         {
             ProgressBar.Maximum = input;
         }
-
+        
         public MainForm()
         {
             InitializeComponent();
@@ -62,7 +73,7 @@ namespace cnblogbackup
 
         private void Backup(MainForm _main_form_control)
         {
-            List<TaskInfo> tasks_info = DiffLinkAndPreTask(this);
+            List<TaskInfo> tasks_info = DiffLinkAndPreTask();
             // ProgressBar.Maximum = tasks.Count;
             if (tasks_info.Count!=0)
             {
@@ -70,8 +81,19 @@ namespace cnblogbackup
                 for (int i = 0; i < tasks_info.Count; i++)
                 {
                     TaskInfo info = tasks_info[i];
-                    task_set[i].ContinueWith((task) => TaskEnded(this, info.user, info.xml_doc, info.title, info.link_url));
+                    //task_set[i].ContinueWith((task) => TaskEndedFault(this, info.link_url, info.title), TaskContinuationOptions.OnlyOnFaulted);
                     task_set[i].RunSynchronously();
+                    task_set[i].ContinueWith((task) => TaskEnded(this, info.user, info.xml_doc, info.title, info.link_url), TaskContinuationOptions.NotOnCanceled);
+                    try
+                    {
+                        task_set[i].Wait();
+                    }catch(AggregateException e)
+                    {
+                        this.Invoke(this.my_delegate, new object[] { tasks_info[i].link_url,tasks_info[i].title,false });
+                    }catch(Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
                 }
             }
             else
@@ -94,7 +116,7 @@ namespace cnblogbackup
             config.ShowDialog();
         }
 
-        private List<TaskInfo> DiffLinkAndPreTask(MainForm _main_form_control)
+        private List<TaskInfo> DiffLinkAndPreTask()
         {
             task_set = new List<Task>();
             List<TaskInfo> tasks_info = new List<TaskInfo>();
@@ -129,9 +151,9 @@ namespace cnblogbackup
 
                                 }, new PdfOutput
                                 {
-                                    // [title] +".pdf"
-                                    OutputFilePath = store_path + "/" + now_link[link_url] + ".pdf"
-                                });
+                                        // [title] +".pdf"
+                                        OutputFilePath = store_path + "/" + now_link[link_url] + ".pdf"
+                                }, this);
                             //temp_task.Start();
                             tasks_info.Add(
                                 new TaskInfo
@@ -156,16 +178,31 @@ namespace cnblogbackup
             }
             return tasks_info;
         }
-        private void log(string text)
+
+        public void LogError(string text)
         {
-            LogText.Text += Environment.NewLine +DateTime.Now.ToShortTimeString() + " " +text;
+            LogAppendDelegate la = new LogAppendDelegate(LogAppend);
+            LogText.Invoke(la, Color.Red, DateTime.Now.ToString("HH:mm:ss ") + text);
+        }
+
+        public void LogMessage(string text)
+        {
+            LogAppendDelegate la = new LogAppendDelegate(LogAppend);
+            LogText.Invoke(la, Color.Black, DateTime.Now.ToString("HH:mm:ss ") + text);
+        }
+
+        public void LogAppend(Color color, string text)
+        {
+            LogText.AppendText(Environment.NewLine);
+            LogText.SelectionColor = color;
+            LogText.AppendText(text);
         }
 
         private void TaskEnded(MainForm _main_form_control, XmlNode _user, XmlDocument _xml_doc, string _title, string _link_url)
         {
             _user.AppendChild(GetLinkNode(_xml_doc, _title, _link_url));
             //Update progress and log's text
-            _main_form_control.Invoke(_main_form_control.my_delegate, new object[] { _link_url , _title});
+            _main_form_control.Invoke(_main_form_control.my_delegate, new object[] { _link_url , _title , true});
         }
 
         private void LogText_TextChanged(object sender, EventArgs e)

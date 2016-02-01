@@ -31,7 +31,7 @@
             MetroFramework.Controls.MetroButton ConfigureButton;
             this.StartButton = new MetroFramework.Controls.MetroButton();
             this.ProgressBar = new MetroFramework.Controls.MetroProgressBar();
-            this.LogText = new System.Windows.Forms.TextBox();
+            this.LogText = new System.Windows.Forms.RichTextBox();
             ConfigureButton = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
@@ -82,12 +82,13 @@
             // 
             this.LogText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.LogText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.LogText.Location = new System.Drawing.Point(63, 194);
-            this.LogText.Multiline = true;
+            this.LogText.Location = new System.Drawing.Point(63, 203);
             this.LogText.Name = "LogText";
-            this.LogText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.LogText.Size = new System.Drawing.Size(496, 175);
+            this.LogText.ReadOnly = true;
+            this.LogText.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.LogText.Size = new System.Drawing.Size(496, 166);
             this.LogText.TabIndex = 4;
+            this.LogText.Text = "";
             this.LogText.TextChanged += new System.EventHandler(this.LogText_TextChanged);
             // 
             // MainForm
@@ -106,7 +107,6 @@
             this.Resizable = false;
             this.Text = "Form1";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -114,7 +114,7 @@
 
         private MetroFramework.Controls.MetroButton StartButton;
         private MetroFramework.Controls.MetroProgressBar ProgressBar;
-        private System.Windows.Forms.TextBox LogText;
+        private System.Windows.Forms.RichTextBox LogText;
     }
 }
 
