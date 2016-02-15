@@ -145,7 +145,7 @@ namespace Codaxy.WkHtmlToPdf
                         TempFolderPath = Path.GetTempPath(),
                         WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
                         //10s means time out.
-                        Timeout = 100
+                        Timeout = 5000
                     };
                 return _e;
             }
@@ -287,12 +287,15 @@ namespace Codaxy.WkHtmlToPdf
                 {
                     DataReceivedEventHandler errorHandler = (sender, e) =>
                     {
-                        if (e.Data == null)
-                            errorWaitHandle.Set();
-                        else
-                        {
+                        //if (e.Data == null)
+                        //    errorWaitHandle.Set();
+                        //else
+                        //{
+                        if (e.Data != null)
                             error.AppendLine(e.Data);
-                        }
+                        else
+                            errorWaitHandle.Set();
+                        //}
                     };
 
                     process.ErrorDataReceived += errorHandler;
@@ -330,11 +333,19 @@ namespace Codaxy.WkHtmlToPdf
                     }
                     else
                     {
+                        process.ErrorDataReceived -= errorHandler;
                         if (!process.HasExited)
                             process.Kill();
+                        if (woutput.OutputFilePath == null || File.Exists(PdfOutputPath))
+                            try {
+                                File.Delete(PdfOutputPath);
+                            }
+                            catch (System.IO.IOException e)
+                            {
+                                Console.Write(e.StackTrace.ToString());
+                            }
                         throw new PdfConvertTimeoutException();
                     }
-
                     process.ErrorDataReceived -= errorHandler;
                     if (woutput.OutputFilePath == null)
                         File.Delete(PdfOutputPath);
