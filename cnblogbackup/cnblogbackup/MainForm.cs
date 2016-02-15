@@ -18,18 +18,21 @@ namespace cnblogbackup
     public partial class MainForm : MetroForm
     {
         private List<Task> task_set = null;
-        public delegate void UpdateProgress(string _link_url,string _title,bool is_success);
+        public delegate void UpdateProgress(string _link_url, string _title, bool is_success);
         public UpdateProgress my_delegate;
         public delegate void UpdateMax(int input);
         public UpdateMax max_delegate;
         public delegate void LogAppendDelegate(Color color, string text);
         private XmlDocument root_xml_doc = null;
+        private int success_count = 0;
+        private int wrong_count = 0;
 
-        private void UpdateProgressMethod(string _link_url,string _title ,bool is_success = true)
+        private void UpdateProgressMethod(string _link_url, string _title, bool is_success = true)
         {
             if (is_success)
             {
                 this.ProgressBar.Value += 1;
+                success_count++;
                 LogMessage("完成对" + _title + "的保存"
                     + Environment.NewLine
                     + "文章链接:" + _link_url);
@@ -37,6 +40,7 @@ namespace cnblogbackup
             else
             {
                 this.ProgressBar.Value += 1;
+                wrong_count++;
                 LogError("失败！ " + _title + "保存未成功！"
                     + Environment.NewLine
                     + "文章链接:" + _link_url);
@@ -46,7 +50,7 @@ namespace cnblogbackup
                 ProgressBar.Style = MetroFramework.MetroColorStyle.Red;
                 root_xml_doc.Save("../../lib/Configure.xml");
                 LogMessage("已经完成全部备份！");
-                LogMessage("本次共爬取保存" + ProgressBar.Maximum + "份博客");
+                LogMessage("本次共爬取保存" + success_count + "份博客,有"+wrong_count+"份博客爬取失败!");
             }
         }
 
@@ -54,7 +58,7 @@ namespace cnblogbackup
         {
             ProgressBar.Maximum = input;
         }
-        
+
         public MainForm()
         {
             InitializeComponent();
@@ -66,6 +70,8 @@ namespace cnblogbackup
         {
             ProgressBar.Style = MetroFramework.MetroColorStyle.Teal;
             ProgressBar.Value = 0;
+            success_count = 0;
+            wrong_count = 0;
             LogText.Text = "开始备份...\n";
             //tasks = DiffLinkAndPreTask();
             await Task.Factory.StartNew(() => Backup(this));
@@ -75,22 +81,25 @@ namespace cnblogbackup
         {
             List<TaskInfo> tasks_info = DiffLinkAndPreTask();
             // ProgressBar.Maximum = tasks.Count;
-            if (tasks_info.Count!=0)
+            if (tasks_info.Count != 0)
             {
                 _main_form_control.Invoke(max_delegate, tasks_info.Count);
                 for (int i = 0; i < tasks_info.Count; i++)
                 {
-                    TaskInfo info = tasks_info[i];
-                    //task_set[i].ContinueWith((task) => TaskEndedFault(this, info.link_url, info.title), TaskContinuationOptions.OnlyOnFaulted);
-                    task_set[i].RunSynchronously();
-                    task_set[i].ContinueWith((task) => TaskEnded(this, info.user, info.xml_doc, info.title, info.link_url), TaskContinuationOptions.NotOnCanceled);
                     try
                     {
+                        TaskInfo info = tasks_info[i];
+                        //task_set[i].ContinueWith((task) => TaskEndedFault(this, info.link_url, info.title), TaskContinuationOptions.OnlyOnFaulted);
+                        task_set[i].ContinueWith((task) => TaskEnded(this, info.user, info.xml_doc, info.title, info.link_url), TaskContinuationOptions.NotOnFaulted);
+                        task_set[i].RunSynchronously();
                         task_set[i].Wait();
-                    }catch(AggregateException e)
+                    }
+                    catch (AggregateException e)
                     {
-                        this.Invoke(this.my_delegate, new object[] { tasks_info[i].link_url,tasks_info[i].title,false });
-                    }catch(Exception e)
+                        // if faulted,then do the false one's continue task.
+                        this.Invoke(this.my_delegate, new object[] { tasks_info[i].link_url, tasks_info[i].title, false });
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
                     }
@@ -151,8 +160,8 @@ namespace cnblogbackup
 
                                 }, new PdfOutput
                                 {
-                                        // [title] +".pdf"
-                                        OutputFilePath = store_path + "/" + now_link[link_url] + ".pdf"
+                                    // [title] +".pdf"
+                                    OutputFilePath = store_path + "/" + now_link[link_url] + ".pdf"
                                 }, this);
                             //temp_task.Start();
                             tasks_info.Add(
@@ -179,12 +188,14 @@ namespace cnblogbackup
             return tasks_info;
         }
 
+        //log the error message
         public void LogError(string text)
         {
             LogAppendDelegate la = new LogAppendDelegate(LogAppend);
             LogText.Invoke(la, Color.Red, DateTime.Now.ToString("HH:mm:ss ") + text);
         }
 
+        //log the correct message
         public void LogMessage(string text)
         {
             LogAppendDelegate la = new LogAppendDelegate(LogAppend);
@@ -202,7 +213,7 @@ namespace cnblogbackup
         {
             _user.AppendChild(GetLinkNode(_xml_doc, _title, _link_url));
             //Update progress and log's text
-            _main_form_control.Invoke(_main_form_control.my_delegate, new object[] { _link_url , _title , true});
+            _main_form_control.Invoke(_main_form_control.my_delegate, new object[] { _link_url, _title, true });
         }
 
         private void LogText_TextChanged(object sender, EventArgs e)

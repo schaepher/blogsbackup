@@ -312,6 +312,7 @@ namespace cnblogbackup
                 this.Close();
             }
         }
+
         private void ClearButton_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(this, "确认要清空列表吗?", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
