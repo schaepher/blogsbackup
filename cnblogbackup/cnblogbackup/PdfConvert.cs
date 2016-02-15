@@ -145,7 +145,7 @@ namespace Codaxy.WkHtmlToPdf
                         TempFolderPath = Path.GetTempPath(),
                         WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
                         //10s means time out.
-                        Timeout = 5000
+                        Timeout = 30000
                     };
                 return _e;
             }
