@@ -144,8 +144,8 @@ namespace Codaxy.WkHtmlToPdf
                     {
                         TempFolderPath = Path.GetTempPath(),
                         WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
-                        //10s means time out.
-                        Timeout = 30000
+                        //2min
+                        Timeout = 120000
                     };
                 return _e;
             }
@@ -182,6 +182,7 @@ namespace Codaxy.WkHtmlToPdf
         {
             StringBuilder paramsBuilder = new StringBuilder();
             paramsBuilder.Append("--page-size A4 ");
+            paramsBuilder.Append("--encoding -utf8");
 
             if (!string.IsNullOrEmpty(document.HeaderUrl))
             {

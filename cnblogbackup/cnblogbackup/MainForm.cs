@@ -33,7 +33,7 @@ namespace cnblogbackup
             {
                 this.ProgressBar.Value += 1;
                 success_count++;
-                LogMessage("完成对" + _title + "的保存"
+                LogMessage("完成对《" + _title + "》的保存"
                     + Environment.NewLine
                     + "文章链接:" + _link_url);
             }
